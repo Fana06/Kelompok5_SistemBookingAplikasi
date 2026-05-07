@@ -1,8 +1,8 @@
 using System;
 using System.Windows.Forms;
-using SistemBookingPasien_5.Forms;
+using BookingKontrolPasien.Forms;
 
-namespace SistemBookingPasien_5
+namespace BookingKontrolPasien
 {
     static class Program
     {
