@@ -399,7 +399,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal update status: " + ex.Message);
+                    "Gagal update status: " + ex.Message); 
             }
         }
 
