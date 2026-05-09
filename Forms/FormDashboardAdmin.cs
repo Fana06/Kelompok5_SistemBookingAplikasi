@@ -78,7 +78,7 @@ namespace BookingKontrolPasien.Forms
                 ) < GETDATE()
             ";
 
-            DBHelper.ExecuteNonQuery(query);
+            DBHelper.ExecuteNonQuery(query); 
         }
 
         private void LoadSummary()
