@@ -224,7 +224,7 @@ namespace BookingKontrolPasien.Forms
                 lblProfilJK.Text = r["jenis_kelamin"].ToString() == "L" ? "Laki-laki" : "Perempuan";
                 lblProfilAlamat.Text = r["alamat"].ToString();
                 lblProfilHP.Text = r["no_hp"].ToString();
-                lblProfilEmail.Text = r["email"].ToString();
+                lblProfilEmail.Text = r["email"].ToString(); 
             }
         }
 
