@@ -30,20 +30,74 @@ namespace BookingKontrolPasien.Forms
             LoadJadwalTersedia();
         }
 
-        private void LoadRiwayatBooking()
+        private void LoadRiwayatBooking(string keyword = "")
         {
-            string query = @"SELECT booking_id AS ID, nama_dokter AS Dokter, spesialisasi AS Spesialisasi,
-                                    hari AS Hari, CONVERT(VARCHAR(5),jam_mulai,108) AS Mulai,
-                                    tanggal_booking AS Tanggal, keluhan AS Keluhan, status_booking AS Status
-                             FROM booking_detail
-                             WHERE nik = (SELECT nik FROM pasien WHERE id=@pid)
-                             ORDER BY tanggal_dibuat DESC";
+            string query = @"
+    SELECT
+        booking_id AS ID,
+        nama_dokter AS Dokter,
+        spesialisasi AS Spesialisasi,
+        hari AS Hari,
+        CONVERT(VARCHAR(5),jam_mulai,108) AS Mulai,
+        tanggal_booking AS Tanggal,
+        keluhan AS Keluhan,
+        status_booking AS Status
+    FROM booking_detail
+    WHERE nik =
+    (
+        SELECT nik
+        FROM pasien
+        WHERE id=@pid
+    )";
 
-            DataTable dt = DBHelper.ExecuteQuery(query,
-                new[] { new SqlParameter("@pid", Session.PasienId) });
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query += @"
+        AND
+        (
+            nama_dokter LIKE @key
+            OR spesialisasi LIKE @key
+            OR hari LIKE @key
+            OR keluhan LIKE @key
+            OR status_booking LIKE @key
+        )";
+            }
+
+            query += " ORDER BY tanggal_dibuat DESC";
+
+            SqlParameter[] param;
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                param = new SqlParameter[]
+                {
+            new SqlParameter("@pid", Session.PasienId),
+            new SqlParameter("@key", "%" + keyword + "%")
+                };
+            }
+            else
+            {
+                param = new SqlParameter[]
+                {
+            new SqlParameter("@pid", Session.PasienId)
+                };
+            }
+
+            DataTable dt =
+                DBHelper.ExecuteQuery(query, param);
+
             dgvRiwayat.DataSource = dt;
+
             FormatGridStatus(dgvRiwayat, "Status");
         }
+
+        private void txtCariRiwayat_TextChanged(
+            object sender,
+            EventArgs e)
+                {
+                    LoadRiwayatBooking(
+                        txtCariRiwayat.Text.Trim());
+                }
 
         private void LoadJadwalTersedia()
         {

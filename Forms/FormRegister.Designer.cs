@@ -48,9 +48,7 @@ namespace BookingKontrolPasien.Forms
             this.panelAccount.SuspendLayout();
             this.panelFooter.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelHeader
-            // 
+            
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.lblSubTitle);
@@ -59,9 +57,7 @@ namespace BookingKontrolPasien.Forms
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(620, 90);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
+            
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(30, 15);
@@ -69,18 +65,14 @@ namespace BookingKontrolPasien.Forms
             this.lblTitle.Size = new System.Drawing.Size(400, 32);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Pendaftaran Akun Pasien";
-            // 
-            // lblSubTitle
-            // 
+            
             this.lblSubTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.lblSubTitle.Location = new System.Drawing.Point(30, 50);
             this.lblSubTitle.Name = "lblSubTitle";
             this.lblSubTitle.Size = new System.Drawing.Size(400, 20);
             this.lblSubTitle.TabIndex = 1;
             this.lblSubTitle.Text = "Isi formulir berikut untuk mendaftar";
-            // 
-            // panelBody
-            // 
+            
             this.panelBody.BackColor = System.Drawing.Color.White;
             this.panelBody.Controls.Add(this.panelAccount);
             this.panelBody.Controls.Add(this.lblSectionData);
@@ -101,9 +93,7 @@ namespace BookingKontrolPasien.Forms
             this.panelBody.Name = "panelBody";
             this.panelBody.Size = new System.Drawing.Size(620, 590);
             this.panelBody.TabIndex = 1;
-            // 
-            // panelAccount
-            // 
+            
             this.panelAccount.BackColor = System.Drawing.Color.White;
             this.panelAccount.Controls.Add(this.lblSectionAkun);
             this.panelAccount.Controls.Add(this.lblEmail);
@@ -116,9 +106,7 @@ namespace BookingKontrolPasien.Forms
             this.panelAccount.Name = "panelAccount";
             this.panelAccount.Size = new System.Drawing.Size(560, 190);
             this.panelAccount.TabIndex = 0;
-            // 
-            // lblSectionAkun
-            // 
+            
             this.lblSectionAkun.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblSectionAkun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.lblSectionAkun.Location = new System.Drawing.Point(0, 0);
@@ -126,34 +114,26 @@ namespace BookingKontrolPasien.Forms
             this.lblSectionAkun.Size = new System.Drawing.Size(300, 22);
             this.lblSectionAkun.TabIndex = 0;
             this.lblSectionAkun.Text = "▌ Data Akun";
-            // 
-            // lblEmail
-            // 
+           
             this.lblEmail.Location = new System.Drawing.Point(0, 28);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(200, 18);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Email";
-            // 
-            // txtEmail
-            // 
+            
             this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Location = new System.Drawing.Point(0, 48);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(540, 23);
             this.txtEmail.TabIndex = 2;
-            // 
-            // lblPassword
-            // 
+             
             this.lblPassword.Location = new System.Drawing.Point(0, 82);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(200, 18);
             this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Password";
-            // 
-            // txtPassword
-            // 
+             
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Location = new System.Drawing.Point(0, 102);
@@ -161,17 +141,13 @@ namespace BookingKontrolPasien.Forms
             this.txtPassword.PasswordChar = '●';
             this.txtPassword.Size = new System.Drawing.Size(540, 23);
             this.txtPassword.TabIndex = 4;
-            // 
-            // lblKonfirmasi
-            // 
+            
             this.lblKonfirmasi.Location = new System.Drawing.Point(0, 136);
             this.lblKonfirmasi.Name = "lblKonfirmasi";
             this.lblKonfirmasi.Size = new System.Drawing.Size(200, 18);
             this.lblKonfirmasi.TabIndex = 5;
             this.lblKonfirmasi.Text = "Konfirmasi Password";
-            // 
-            // txtKonfirmasi
-            // 
+            
             this.txtKonfirmasi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtKonfirmasi.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtKonfirmasi.Location = new System.Drawing.Point(0, 156);
@@ -179,9 +155,7 @@ namespace BookingKontrolPasien.Forms
             this.txtKonfirmasi.PasswordChar = '●';
             this.txtKonfirmasi.Size = new System.Drawing.Size(540, 23);
             this.txtKonfirmasi.TabIndex = 6;
-            // 
-            // lblSectionData
-            // 
+            
             this.lblSectionData.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblSectionData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.lblSectionData.Location = new System.Drawing.Point(30, 210);
@@ -189,17 +163,13 @@ namespace BookingKontrolPasien.Forms
             this.lblSectionData.Size = new System.Drawing.Size(300, 22);
             this.lblSectionData.TabIndex = 1;
             this.lblSectionData.Text = "▌ Data Diri Pasien";
-            // 
-            // lblNIK
-            // 
+            
             this.lblNIK.Location = new System.Drawing.Point(30, 238);
             this.lblNIK.Name = "lblNIK";
             this.lblNIK.Size = new System.Drawing.Size(200, 18);
             this.lblNIK.TabIndex = 2;
             this.lblNIK.Text = "NIK (16 digit)";
-            // 
-            // txtNIK
-            // 
+             
             this.txtNIK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtNIK.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNIK.Location = new System.Drawing.Point(30, 258);
@@ -207,50 +177,38 @@ namespace BookingKontrolPasien.Forms
             this.txtNIK.Name = "txtNIK";
             this.txtNIK.Size = new System.Drawing.Size(560, 23);
             this.txtNIK.TabIndex = 3;
-            // 
-            // lblNama
-            // 
+             
             this.lblNama.Location = new System.Drawing.Point(30, 292);
             this.lblNama.Name = "lblNama";
             this.lblNama.Size = new System.Drawing.Size(200, 18);
             this.lblNama.TabIndex = 4;
             this.lblNama.Text = "Nama Lengkap";
-            // 
-            // txtNama
-            // 
+             
             this.txtNama.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtNama.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNama.Location = new System.Drawing.Point(30, 312);
             this.txtNama.Name = "txtNama";
             this.txtNama.Size = new System.Drawing.Size(560, 23);
             this.txtNama.TabIndex = 5;
-            // 
-            // lblTglLahir
-            // 
+             
             this.lblTglLahir.Location = new System.Drawing.Point(30, 346);
             this.lblTglLahir.Name = "lblTglLahir";
             this.lblTglLahir.Size = new System.Drawing.Size(200, 18);
             this.lblTglLahir.TabIndex = 6;
             this.lblTglLahir.Text = "Tanggal Lahir";
-            // 
-            // dtTanggalLahir
-            // 
+            
             this.dtTanggalLahir.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtTanggalLahir.Location = new System.Drawing.Point(30, 366);
             this.dtTanggalLahir.Name = "dtTanggalLahir";
             this.dtTanggalLahir.Size = new System.Drawing.Size(260, 23);
             this.dtTanggalLahir.TabIndex = 7;
-            // 
-            // lblJK
-            // 
+             
             this.lblJK.Location = new System.Drawing.Point(310, 346);
             this.lblJK.Name = "lblJK";
             this.lblJK.Size = new System.Drawing.Size(200, 18);
             this.lblJK.TabIndex = 8;
             this.lblJK.Text = "Jenis Kelamin";
-            // 
-            // rbLaki
-            // 
+            
             this.rbLaki.Checked = true;
             this.rbLaki.Location = new System.Drawing.Point(310, 366);
             this.rbLaki.Name = "rbLaki";
@@ -258,25 +216,19 @@ namespace BookingKontrolPasien.Forms
             this.rbLaki.TabIndex = 9;
             this.rbLaki.TabStop = true;
             this.rbLaki.Text = "Laki-laki";
-            // 
-            // rbPerempuan
-            // 
+            
             this.rbPerempuan.Location = new System.Drawing.Point(440, 366);
             this.rbPerempuan.Name = "rbPerempuan";
             this.rbPerempuan.Size = new System.Drawing.Size(120, 20);
             this.rbPerempuan.TabIndex = 10;
             this.rbPerempuan.Text = "Perempuan";
-            // 
-            // lblAlamat
-            // 
+            
             this.lblAlamat.Location = new System.Drawing.Point(30, 400);
             this.lblAlamat.Name = "lblAlamat";
             this.lblAlamat.Size = new System.Drawing.Size(200, 18);
             this.lblAlamat.TabIndex = 11;
             this.lblAlamat.Text = "Alamat";
-            // 
-            // txtAlamat
-            // 
+            
             this.txtAlamat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtAlamat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAlamat.Location = new System.Drawing.Point(30, 420);
@@ -284,26 +236,20 @@ namespace BookingKontrolPasien.Forms
             this.txtAlamat.Name = "txtAlamat";
             this.txtAlamat.Size = new System.Drawing.Size(560, 60);
             this.txtAlamat.TabIndex = 12;
-            // 
-            // lblNoHP
-            // 
+             
             this.lblNoHP.Location = new System.Drawing.Point(30, 490);
             this.lblNoHP.Name = "lblNoHP";
             this.lblNoHP.Size = new System.Drawing.Size(200, 18);
             this.lblNoHP.TabIndex = 13;
             this.lblNoHP.Text = "Nomor HP";
-            // 
-            // txtNoHP
-            // 
+            
             this.txtNoHP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtNoHP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNoHP.Location = new System.Drawing.Point(30, 510);
             this.txtNoHP.Name = "txtNoHP";
             this.txtNoHP.Size = new System.Drawing.Size(260, 23);
             this.txtNoHP.TabIndex = 14;
-            // 
-            // panelFooter
-            // 
+            
             this.panelFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.panelFooter.Controls.Add(this.btnDaftar);
             this.panelFooter.Controls.Add(this.btnBatal);
@@ -312,9 +258,7 @@ namespace BookingKontrolPasien.Forms
             this.panelFooter.Name = "panelFooter";
             this.panelFooter.Size = new System.Drawing.Size(620, 70);
             this.panelFooter.TabIndex = 2;
-            // 
-            // btnDaftar
-            // 
+            
             this.btnDaftar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.btnDaftar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDaftar.FlatAppearance.BorderSize = 0;
@@ -328,9 +272,7 @@ namespace BookingKontrolPasien.Forms
             this.btnDaftar.Text = "DAFTAR";
             this.btnDaftar.UseVisualStyleBackColor = false;
             this.btnDaftar.Click += new System.EventHandler(this.btnDaftar_Click);
-            // 
-            // btnBatal
-            // 
+            
             this.btnBatal.BackColor = System.Drawing.Color.White;
             this.btnBatal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBatal.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
@@ -344,9 +286,7 @@ namespace BookingKontrolPasien.Forms
             this.btnBatal.Text = "BATAL";
             this.btnBatal.UseVisualStyleBackColor = false;
             this.btnBatal.Click += new System.EventHandler(this.btnBatal_Click);
-            // 
-            // FormRegister
-            // 
+            
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(624, 721);

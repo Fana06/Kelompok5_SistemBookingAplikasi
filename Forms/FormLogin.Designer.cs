@@ -32,9 +32,7 @@ namespace BookingKontrolPasien.Forms
             this.panelLeft.SuspendLayout();
             this.panelRight.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelMain
-            // 
+            
             this.panelMain.Controls.Add(this.panelLeft);
             this.panelMain.Controls.Add(this.panelRight);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -42,9 +40,7 @@ namespace BookingKontrolPasien.Forms
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(804, 461);
             this.panelMain.TabIndex = 0;
-            // 
-            // panelLeft
-            // 
+            
             this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.panelLeft.Controls.Add(this.lblAppName);
             this.panelLeft.Controls.Add(this.lblSubtitle);
@@ -52,9 +48,8 @@ namespace BookingKontrolPasien.Forms
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(320, 500);
             this.panelLeft.TabIndex = 0;
-            // 
-            // lblAppName
-            // 
+            this.panelLeft.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLeft_Paint);
+            
             this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblAppName.ForeColor = System.Drawing.Color.White;
             this.lblAppName.Location = new System.Drawing.Point(10, 140);
@@ -64,9 +59,7 @@ namespace BookingKontrolPasien.Forms
             this.lblAppName.Text = "Booking\n Kontrol RS. Dillo Sehati";
             this.lblAppName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblAppName.Click += new System.EventHandler(this.lblAppName_Click);
-            // 
-            // lblSubtitle
-            // 
+            
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.lblSubtitle.Location = new System.Drawing.Point(22, 310);
@@ -75,9 +68,7 @@ namespace BookingKontrolPasien.Forms
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Semoga Sembuh, Aamiin... YRA";
             this.lblSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panelRight
-            // 
+            
             this.panelRight.BackColor = System.Drawing.Color.White;
             this.panelRight.Controls.Add(this.lblTitle);
             this.panelRight.Controls.Add(this.lblEmailLbl);
@@ -92,9 +83,7 @@ namespace BookingKontrolPasien.Forms
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(480, 500);
             this.panelRight.TabIndex = 1;
-            // 
-            // lblTitle
-            // 
+            
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.lblTitle.Location = new System.Drawing.Point(50, 60);
@@ -102,9 +91,7 @@ namespace BookingKontrolPasien.Forms
             this.lblTitle.Size = new System.Drawing.Size(380, 54);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Selamat Datang";
-            // 
-            // lblEmailLbl
-            // 
+            
             this.lblEmailLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblEmailLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.lblEmailLbl.Location = new System.Drawing.Point(50, 140);
@@ -112,19 +99,15 @@ namespace BookingKontrolPasien.Forms
             this.lblEmailLbl.Size = new System.Drawing.Size(200, 20);
             this.lblEmailLbl.TabIndex = 1;
             this.lblEmailLbl.Text = "Email";
-            // 
-            // txtEmail
-            // 
+            
             this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtEmail.Location = new System.Drawing.Point(50, 163);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(360, 25);
+            this.txtEmail.Size = new System.Drawing.Size(360, 20);
             this.txtEmail.TabIndex = 2;
-            // 
-            // lblPassLbl
-            // 
+             
             this.lblPassLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblPassLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.lblPassLbl.Location = new System.Drawing.Point(50, 210);
@@ -132,21 +115,17 @@ namespace BookingKontrolPasien.Forms
             this.lblPassLbl.Size = new System.Drawing.Size(200, 20);
             this.lblPassLbl.TabIndex = 3;
             this.lblPassLbl.Text = "Password";
-            // 
-            // txtPassword
-            // 
+            
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtPassword.Location = new System.Drawing.Point(50, 233);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
-            this.txtPassword.Size = new System.Drawing.Size(360, 32);
+            this.txtPassword.Size = new System.Drawing.Size(360, 27);
             this.txtPassword.TabIndex = 4;
             this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
-            // 
-            // lblError
-            // 
+            
             this.lblError.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblError.ForeColor = System.Drawing.Color.Red;
             this.lblError.Location = new System.Drawing.Point(50, 272);
@@ -154,9 +133,7 @@ namespace BookingKontrolPasien.Forms
             this.lblError.Size = new System.Drawing.Size(360, 20);
             this.lblError.TabIndex = 5;
             this.lblError.Visible = false;
-            // 
-            // btnLogin
-            // 
+            
             this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogin.FlatAppearance.BorderSize = 0;
@@ -170,9 +147,7 @@ namespace BookingKontrolPasien.Forms
             this.btnLogin.Text = "MASUK";
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // lblOr
-            // 
+            
             this.lblOr.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblOr.ForeColor = System.Drawing.Color.Gray;
             this.lblOr.Location = new System.Drawing.Point(50, 360);
@@ -181,9 +156,7 @@ namespace BookingKontrolPasien.Forms
             this.lblOr.TabIndex = 7;
             this.lblOr.Text = "Belum punya akun?";
             this.lblOr.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnRegister
-            // 
+            
             this.btnRegister.BackColor = System.Drawing.Color.White;
             this.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegister.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
@@ -197,9 +170,7 @@ namespace BookingKontrolPasien.Forms
             this.btnRegister.Text = "DAFTAR DISINI";
             this.btnRegister.UseVisualStyleBackColor = false;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
-            // 
-            // FormLogin
-            // 
+            
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(804, 461);
             this.Controls.Add(this.panelMain);

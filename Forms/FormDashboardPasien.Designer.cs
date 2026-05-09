@@ -21,6 +21,8 @@ namespace BookingKontrolPasien.Forms
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabRiwayat = new System.Windows.Forms.TabPage();
             this.panelRiwayatBar = new System.Windows.Forms.Panel();
+            this.txtCariRiwayat = new System.Windows.Forms.TextBox();
+            this.lblCariRiwayat = new System.Windows.Forms.Label();
             this.btnBatalBooking = new System.Windows.Forms.Button();
             this.dgvRiwayat = new System.Windows.Forms.DataGridView();
             this.tabBookingBaru = new System.Windows.Forms.TabPage();
@@ -103,6 +105,19 @@ namespace BookingKontrolPasien.Forms
             this.panelRiwayatBar.Location = new System.Drawing.Point(10, 10);
             this.panelRiwayatBar.Size = new System.Drawing.Size(950, 48);
             this.panelRiwayatBar.BackColor = System.Drawing.Color.Transparent;
+            this.lblCariRiwayat.Text = "Cari:";
+            this.lblCariRiwayat.Location = new System.Drawing.Point(10, 12);
+            this.lblCariRiwayat.Size = new System.Drawing.Size(40, 20);
+            this.lblCariRiwayat.Font =
+                new System.Drawing.Font("Segoe UI", 9F,
+                System.Drawing.FontStyle.Bold);
+            this.txtCariRiwayat.Location = new System.Drawing.Point(55, 9);
+
+            this.txtCariRiwayat.Size = new System.Drawing.Size(250, 23);
+
+            this.txtCariRiwayat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
+            this.txtCariRiwayat.TextChanged += new System.EventHandler(this.txtCariRiwayat_TextChanged);
 
             this.btnBatalBooking.Text = "✖  Batalkan Booking";
             this.btnBatalBooking.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
@@ -115,6 +130,8 @@ namespace BookingKontrolPasien.Forms
             this.btnBatalBooking.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBatalBooking.Click += new System.EventHandler(this.btnBatalBooking_Click);
 
+            this.panelRiwayatBar.Controls.Add(this.lblCariRiwayat);
+            this.panelRiwayatBar.Controls.Add(this.txtCariRiwayat);
             this.panelRiwayatBar.Controls.Add(this.btnBatalBooking);
 
             this.dgvRiwayat.Location = new System.Drawing.Point(10, 65);
@@ -242,6 +259,8 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.TabPage tabRiwayat;
         private System.Windows.Forms.Panel panelRiwayatBar;
         private System.Windows.Forms.Button btnBatalBooking;
+        private System.Windows.Forms.TextBox txtCariRiwayat;
+        private System.Windows.Forms.Label lblCariRiwayat;
         private System.Windows.Forms.DataGridView dgvRiwayat;
         private System.Windows.Forms.TabPage tabBookingBaru;
         private System.Windows.Forms.Panel panelJadwalTop;

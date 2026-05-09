@@ -1,3 +1,5 @@
+using System;
+
 namespace BookingKontrolPasien.Forms
 {
     partial class FormDashboardAdmin
@@ -14,6 +16,8 @@ namespace BookingKontrolPasien.Forms
 
         private void InitializeComponent()
         {
+
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTop = new System.Windows.Forms.Panel();
             this.lblAppTitle = new System.Windows.Forms.Label();
@@ -56,12 +60,14 @@ namespace BookingKontrolPasien.Forms
             this.lblKuota = new System.Windows.Forms.Label();
             this.nudKuota = new System.Windows.Forms.NumericUpDown();
             this.btnTambahJadwal = new System.Windows.Forms.Button();
+            this.dgvJadwal = new System.Windows.Forms.DataGridView();
             this.lblCardPasien = new System.Windows.Forms.Label();
             this.lblTotalPasien = new System.Windows.Forms.Label();
             this.lblCardDokter = new System.Windows.Forms.Label();
             this.lblTotalDokter = new System.Windows.Forms.Label();
             this.lblCardMenunggu = new System.Windows.Forms.Label();
             this.lblMenunggu = new System.Windows.Forms.Label();
+            this.dgvDokter = new System.Windows.Forms.DataGridView();
             this.panelTop.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabSummary.SuspendLayout();
@@ -69,15 +75,15 @@ namespace BookingKontrolPasien.Forms
             this.tabBooking.SuspendLayout();
             this.panelFilterBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooking)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJadwal)).BeginInit();
             this.tabDokter.SuspendLayout();
             this.panelFormDokter.SuspendLayout();
             this.tabJadwal.SuspendLayout();
             this.panelFormJadwal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudKuota)).BeginInit();
-            this.SuspendLayout();
-            this.dgvDokter = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDokter)).BeginInit();
-
+            this.SuspendLayout();
+            
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.panelTop.Controls.Add(this.lblAppTitle);
             this.panelTop.Controls.Add(this.lblWelcome);
@@ -87,7 +93,7 @@ namespace BookingKontrolPasien.Forms
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1082, 60);
             this.panelTop.TabIndex = 1;
-
+            
             this.lblAppTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblAppTitle.ForeColor = System.Drawing.Color.White;
             this.lblAppTitle.Location = new System.Drawing.Point(20, 15);
@@ -95,13 +101,13 @@ namespace BookingKontrolPasien.Forms
             this.lblAppTitle.Size = new System.Drawing.Size(420, 30);
             this.lblAppTitle.TabIndex = 0;
             this.lblAppTitle.Text = "🏥 Sistem Booking Kontrol Pasien";
-
+            
             this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.lblWelcome.Location = new System.Drawing.Point(460, 20);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(400, 22);
             this.lblWelcome.TabIndex = 1;
-
+            
             this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogout.FlatAppearance.BorderSize = 0;
@@ -115,7 +121,7 @@ namespace BookingKontrolPasien.Forms
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-
+           
             this.tabControl.Controls.Add(this.tabSummary);
             this.tabControl.Controls.Add(this.tabBooking);
             this.tabControl.Controls.Add(this.tabDokter);
@@ -128,15 +134,15 @@ namespace BookingKontrolPasien.Forms
             this.tabControl.Size = new System.Drawing.Size(1082, 573);
             this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-
+            
             this.tabSummary.Controls.Add(this.panelCards);
-            this.tabSummary.Location = new System.Drawing.Point(4, 32);
+            this.tabSummary.Location = new System.Drawing.Point(4, 26);
             this.tabSummary.Name = "tabSummary";
             this.tabSummary.Padding = new System.Windows.Forms.Padding(10);
-            this.tabSummary.Size = new System.Drawing.Size(1074, 537);
+            this.tabSummary.Size = new System.Drawing.Size(1074, 543);
             this.tabSummary.TabIndex = 0;
             this.tabSummary.Text = "  Ringkasan  ";
-
+            
             this.panelCards.BackColor = System.Drawing.Color.Transparent;
             this.panelCards.Controls.Add(this.cardPasien);
             this.panelCards.Controls.Add(this.cardDokter);
@@ -146,32 +152,30 @@ namespace BookingKontrolPasien.Forms
             this.panelCards.Size = new System.Drawing.Size(1040, 200);
             this.panelCards.TabIndex = 0;
             this.panelCards.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCards_Paint);
-
+            
             this.cardPasien.Location = new System.Drawing.Point(0, 0);
             this.cardPasien.Name = "cardPasien";
             this.cardPasien.Size = new System.Drawing.Size(200, 100);
             this.cardPasien.TabIndex = 0;
-
+            
             this.cardDokter.Location = new System.Drawing.Point(0, 0);
             this.cardDokter.Name = "cardDokter";
             this.cardDokter.Size = new System.Drawing.Size(200, 100);
             this.cardDokter.TabIndex = 1;
-
+            
             this.cardMenunggu.Location = new System.Drawing.Point(0, 0);
             this.cardMenunggu.Name = "cardMenunggu";
             this.cardMenunggu.Size = new System.Drawing.Size(200, 100);
             this.cardMenunggu.TabIndex = 2;
-
+            
             this.tabBooking.Controls.Add(this.panelFilterBar);
             this.tabBooking.Controls.Add(this.dgvBooking);
-            this.tabBooking.Location = new System.Drawing.Point(4, 32);
+            this.tabBooking.Location = new System.Drawing.Point(4, 26);
             this.tabBooking.Name = "tabBooking";
-            this.tabBooking.Size = new System.Drawing.Size(192, 64);
+            this.tabBooking.Size = new System.Drawing.Size(1074, 543);
             this.tabBooking.TabIndex = 1;
             this.tabBooking.Text = "  Manajemen Booking  ";
-            // 
-            // panelFilterBar
-            // 
+            
             this.panelFilterBar.BackColor = System.Drawing.Color.Transparent;
             this.panelFilterBar.Controls.Add(this.lblFilter);
             this.panelFilterBar.Controls.Add(this.cmbFilter);
@@ -182,13 +186,13 @@ namespace BookingKontrolPasien.Forms
             this.panelFilterBar.Name = "panelFilterBar";
             this.panelFilterBar.Size = new System.Drawing.Size(1050, 50);
             this.panelFilterBar.TabIndex = 0;
-
+          
             this.lblFilter.Location = new System.Drawing.Point(0, 14);
             this.lblFilter.Name = "lblFilter";
             this.lblFilter.Size = new System.Drawing.Size(90, 20);
             this.lblFilter.TabIndex = 0;
             this.lblFilter.Text = "Filter Status:";
-
+           
             this.cmbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFilter.Items.AddRange(new object[] {
             "Semua",
@@ -199,35 +203,60 @@ namespace BookingKontrolPasien.Forms
             "batal"});
             this.cmbFilter.Location = new System.Drawing.Point(95, 10);
             this.cmbFilter.Name = "cmbFilter";
-            this.cmbFilter.Size = new System.Drawing.Size(140, 31);
+            this.cmbFilter.Size = new System.Drawing.Size(140, 25);
             this.cmbFilter.TabIndex = 1;
             this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.cmbFilter_SelectedIndexChanged);
 
-            this.btnSetujui.Location = new System.Drawing.Point(0, 0);
+            this.btnSetujui.BackColor = System.Drawing.Color.FromArgb(39, 174, 96);
+            this.btnSetujui.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSetujui.FlatAppearance.BorderSize = 0;
+            this.btnSetujui.ForeColor = System.Drawing.Color.White;
+            this.btnSetujui.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSetujui.Location = new System.Drawing.Point(300, 10);
             this.btnSetujui.Name = "btnSetujui";
-            this.btnSetujui.Size = new System.Drawing.Size(75, 23);
+            this.btnSetujui.Size = new System.Drawing.Size(100, 30);
             this.btnSetujui.TabIndex = 2;
+            this.btnSetujui.Text = "✔ Setujui";
+            this.btnSetujui.UseVisualStyleBackColor = false;
+            this.btnSetujui.Click += new System.EventHandler(this.btnSetujui_Click);
 
-            this.btnTolak.Location = new System.Drawing.Point(0, 0);
+            this.btnTolak.BackColor = System.Drawing.Color.FromArgb(231, 76, 60);
+            this.btnTolak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTolak.FlatAppearance.BorderSize = 0;
+            this.btnTolak.ForeColor = System.Drawing.Color.White;
+            this.btnTolak.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnTolak.Location = new System.Drawing.Point(410, 10);
             this.btnTolak.Name = "btnTolak";
-            this.btnTolak.Size = new System.Drawing.Size(75, 23);
+            this.btnTolak.Size = new System.Drawing.Size(100, 30);
             this.btnTolak.TabIndex = 3;
+            this.btnTolak.Text = "✖ Tolak";
+            this.btnTolak.UseVisualStyleBackColor = false;
+            this.btnTolak.Click += new System.EventHandler(this.btnTolak_Click);
 
-            this.btnSelesai.Location = new System.Drawing.Point(0, 0);
+            
+            this.btnSelesai.BackColor = System.Drawing.Color.FromArgb(52, 152, 219);
+            this.btnSelesai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelesai.FlatAppearance.BorderSize = 0;
+            this.btnSelesai.ForeColor = System.Drawing.Color.White;
+            this.btnSelesai.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSelesai.Location = new System.Drawing.Point(520, 10);
             this.btnSelesai.Name = "btnSelesai";
-            this.btnSelesai.Size = new System.Drawing.Size(75, 23);
+            this.btnSelesai.Size = new System.Drawing.Size(100, 30);
             this.btnSelesai.TabIndex = 4;
-
+            this.btnSelesai.Text = "✓ Selesai";
+            this.btnSelesai.UseVisualStyleBackColor = false;
+            this.btnSelesai.Click += new System.EventHandler(this.btnSelesai_Click);
+             
             this.dgvBooking.BackgroundColor = System.Drawing.Color.White;
             this.dgvBooking.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBooking.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBooking.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvBooking.ColumnHeadersHeight = 36;
             this.dgvBooking.EnableHeadersVisualStyles = false;
             this.dgvBooking.Location = new System.Drawing.Point(10, 68);
@@ -236,15 +265,16 @@ namespace BookingKontrolPasien.Forms
             this.dgvBooking.RowHeadersWidth = 51;
             this.dgvBooking.Size = new System.Drawing.Size(1050, 490);
             this.dgvBooking.TabIndex = 1;
-
+            
             this.tabDokter.Controls.Add(this.panelFormDokter);
-            this.tabDokter.Location = new System.Drawing.Point(4, 32);
+            this.tabDokter.Controls.Add(this.dgvDokter);
+            this.tabDokter.Location = new System.Drawing.Point(4, 26);
             this.tabDokter.Name = "tabDokter";
-            this.tabDokter.Size = new System.Drawing.Size(1074, 537);
+            this.tabDokter.Size = new System.Drawing.Size(1074, 543);
             this.tabDokter.TabIndex = 2;
             this.tabDokter.Text = "  Data Dokter  ";
             this.tabDokter.Click += new System.EventHandler(this.tabDokter_Click);
-
+            
             this.panelFormDokter.BackColor = System.Drawing.Color.White;
             this.panelFormDokter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelFormDokter.Controls.Add(this.lblNamaDokter);
@@ -259,43 +289,43 @@ namespace BookingKontrolPasien.Forms
             this.panelFormDokter.Name = "panelFormDokter";
             this.panelFormDokter.Size = new System.Drawing.Size(1050, 70);
             this.panelFormDokter.TabIndex = 0;
-
+            
             this.lblNamaDokter.Location = new System.Drawing.Point(10, 10);
             this.lblNamaDokter.Name = "lblNamaDokter";
             this.lblNamaDokter.Size = new System.Drawing.Size(90, 18);
             this.lblNamaDokter.TabIndex = 0;
             this.lblNamaDokter.Text = "Nama Dokter:";
-
+           
             this.txtNamaDokter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNamaDokter.Location = new System.Drawing.Point(100, 8);
             this.txtNamaDokter.Name = "txtNamaDokter";
-            this.txtNamaDokter.Size = new System.Drawing.Size(200, 30);
+            this.txtNamaDokter.Size = new System.Drawing.Size(200, 25);
             this.txtNamaDokter.TabIndex = 1;
-
+          
             this.lblSpesialisasi.Location = new System.Drawing.Point(320, 10);
             this.lblSpesialisasi.Name = "lblSpesialisasi";
             this.lblSpesialisasi.Size = new System.Drawing.Size(80, 18);
             this.lblSpesialisasi.TabIndex = 2;
             this.lblSpesialisasi.Text = "Spesialisasi:";
-
+            
             this.txtSpesialisasi.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpesialisasi.Location = new System.Drawing.Point(400, 8);
             this.txtSpesialisasi.Name = "txtSpesialisasi";
-            this.txtSpesialisasi.Size = new System.Drawing.Size(160, 30);
+            this.txtSpesialisasi.Size = new System.Drawing.Size(160, 25);
             this.txtSpesialisasi.TabIndex = 3;
-
+           
             this.lblNoHPDokterLbl.Location = new System.Drawing.Point(580, 10);
             this.lblNoHPDokterLbl.Name = "lblNoHPDokterLbl";
             this.lblNoHPDokterLbl.Size = new System.Drawing.Size(50, 18);
             this.lblNoHPDokterLbl.TabIndex = 4;
             this.lblNoHPDokterLbl.Text = "No HP:";
-
+           
             this.txtNoHPDokter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNoHPDokter.Location = new System.Drawing.Point(635, 8);
             this.txtNoHPDokter.Name = "txtNoHPDokter";
-            this.txtNoHPDokter.Size = new System.Drawing.Size(150, 30);
+            this.txtNoHPDokter.Size = new System.Drawing.Size(150, 25);
             this.txtNoHPDokter.TabIndex = 5;
-
+           
             this.btnTambahDokter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.btnTambahDokter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTambahDokter.FlatAppearance.BorderSize = 0;
@@ -308,7 +338,7 @@ namespace BookingKontrolPasien.Forms
             this.btnTambahDokter.Text = "+ Tambah";
             this.btnTambahDokter.UseVisualStyleBackColor = false;
             this.btnTambahDokter.Click += new System.EventHandler(this.btnTambahDokter_Click);
-
+          
             this.btnNonaktifDokter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
             this.btnNonaktifDokter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNonaktifDokter.FlatAppearance.BorderSize = 0;
@@ -321,14 +351,15 @@ namespace BookingKontrolPasien.Forms
             this.btnNonaktifDokter.Text = "Nonaktif/Aktif";
             this.btnNonaktifDokter.UseVisualStyleBackColor = false;
             this.btnNonaktifDokter.Click += new System.EventHandler(this.btnNonaktifDokter_Click);
-
+            
             this.tabJadwal.Controls.Add(this.panelFormJadwal);
-            this.tabJadwal.Location = new System.Drawing.Point(4, 32);
+            this.tabJadwal.Controls.Add(this.dgvJadwal);
+            this.tabJadwal.Location = new System.Drawing.Point(4, 26);
             this.tabJadwal.Name = "tabJadwal";
-            this.tabJadwal.Size = new System.Drawing.Size(192, 64);
+            this.tabJadwal.Size = new System.Drawing.Size(1074, 543);
             this.tabJadwal.TabIndex = 3;
             this.tabJadwal.Text = "  Jadwal Dokter  ";
-
+           
             this.panelFormJadwal.BackColor = System.Drawing.Color.White;
             this.panelFormJadwal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelFormJadwal.Controls.Add(this.lblDokterJadwal);
@@ -346,25 +377,37 @@ namespace BookingKontrolPasien.Forms
             this.panelFormJadwal.Name = "panelFormJadwal";
             this.panelFormJadwal.Size = new System.Drawing.Size(1050, 70);
             this.panelFormJadwal.TabIndex = 0;
-
+            this.panelFormJadwal.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFormJadwal_Paint);
+          
+            this.dgvJadwal.BackgroundColor = System.Drawing.Color.White;
+            this.dgvJadwal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvJadwal.ColumnHeadersHeight = 36;
+            this.dgvJadwal.EnableHeadersVisualStyles = false;
+            this.dgvJadwal.Location = new System.Drawing.Point(10, 88);
+            this.dgvJadwal.Name = "dgvJadwal";
+            this.dgvJadwal.ReadOnly = true;
+            this.dgvJadwal.RowHeadersWidth = 51;
+            this.dgvJadwal.Size = new System.Drawing.Size(1050, 445);
+            this.dgvJadwal.TabIndex = 1;
+          
             this.lblDokterJadwal.Location = new System.Drawing.Point(10, 10);
             this.lblDokterJadwal.Name = "lblDokterJadwal";
             this.lblDokterJadwal.Size = new System.Drawing.Size(55, 18);
             this.lblDokterJadwal.TabIndex = 0;
             this.lblDokterJadwal.Text = "Dokter:";
-
-            this.cmbDokterJadwal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+                        this.cmbDokterJadwal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDokterJadwal.Location = new System.Drawing.Point(65, 8);
             this.cmbDokterJadwal.Name = "cmbDokterJadwal";
-            this.cmbDokterJadwal.Size = new System.Drawing.Size(180, 31);
+            this.cmbDokterJadwal.Size = new System.Drawing.Size(180, 25);
             this.cmbDokterJadwal.TabIndex = 1;
-
+            this.cmbDokterJadwal.SelectedIndexChanged += new System.EventHandler(this.cmbDokterJadwal_SelectedIndexChanged);
+           
             this.lblHari.Location = new System.Drawing.Point(260, 10);
             this.lblHari.Name = "lblHari";
             this.lblHari.Size = new System.Drawing.Size(35, 18);
             this.lblHari.TabIndex = 2;
             this.lblHari.Text = "Hari:";
-
+           
             this.cmbHari.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbHari.Items.AddRange(new object[] {
             "Senin",
@@ -376,40 +419,41 @@ namespace BookingKontrolPasien.Forms
             "Minggu"});
             this.cmbHari.Location = new System.Drawing.Point(295, 8);
             this.cmbHari.Name = "cmbHari";
-            this.cmbHari.Size = new System.Drawing.Size(100, 31);
+            this.cmbHari.Size = new System.Drawing.Size(100, 25);
             this.cmbHari.TabIndex = 3;
+            
             this.lblMulai.Location = new System.Drawing.Point(410, 10);
             this.lblMulai.Name = "lblMulai";
             this.lblMulai.Size = new System.Drawing.Size(70, 18);
             this.lblMulai.TabIndex = 4;
             this.lblMulai.Text = "Jam Mulai:";
-
+           
             this.dtpMulai.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpMulai.Location = new System.Drawing.Point(485, 8);
             this.dtpMulai.Name = "dtpMulai";
             this.dtpMulai.ShowUpDown = true;
-            this.dtpMulai.Size = new System.Drawing.Size(100, 30);
+            this.dtpMulai.Size = new System.Drawing.Size(100, 25);
             this.dtpMulai.TabIndex = 5;
-
+           
             this.lblSelesai.Location = new System.Drawing.Point(600, 10);
             this.lblSelesai.Name = "lblSelesai";
             this.lblSelesai.Size = new System.Drawing.Size(78, 18);
             this.lblSelesai.TabIndex = 6;
             this.lblSelesai.Text = "Jam Selesai:";
-
+           
             this.dtpSelesai.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpSelesai.Location = new System.Drawing.Point(680, 8);
             this.dtpSelesai.Name = "dtpSelesai";
             this.dtpSelesai.ShowUpDown = true;
-            this.dtpSelesai.Size = new System.Drawing.Size(100, 30);
+            this.dtpSelesai.Size = new System.Drawing.Size(100, 25);
             this.dtpSelesai.TabIndex = 7;
-
+          
             this.lblKuota.Location = new System.Drawing.Point(800, 10);
             this.lblKuota.Name = "lblKuota";
             this.lblKuota.Size = new System.Drawing.Size(45, 18);
             this.lblKuota.TabIndex = 8;
             this.lblKuota.Text = "Kuota:";
-
+            
             this.nudKuota.Location = new System.Drawing.Point(848, 8);
             this.nudKuota.Maximum = new decimal(new int[] {
             50,
@@ -422,14 +466,14 @@ namespace BookingKontrolPasien.Forms
             0,
             0});
             this.nudKuota.Name = "nudKuota";
-            this.nudKuota.Size = new System.Drawing.Size(60, 30);
+            this.nudKuota.Size = new System.Drawing.Size(60, 25);
             this.nudKuota.TabIndex = 9;
             this.nudKuota.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
-
+          
             this.btnTambahJadwal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.btnTambahJadwal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTambahJadwal.FlatAppearance.BorderSize = 0;
@@ -442,37 +486,66 @@ namespace BookingKontrolPasien.Forms
             this.btnTambahJadwal.Text = "+ Tambah";
             this.btnTambahJadwal.UseVisualStyleBackColor = false;
             this.btnTambahJadwal.Click += new System.EventHandler(this.btnTambahJadwal_Click);
-
+            
             this.lblCardPasien.Location = new System.Drawing.Point(0, 0);
             this.lblCardPasien.Name = "lblCardPasien";
             this.lblCardPasien.Size = new System.Drawing.Size(100, 23);
             this.lblCardPasien.TabIndex = 0;
-
+           
             this.lblTotalPasien.Location = new System.Drawing.Point(0, 0);
             this.lblTotalPasien.Name = "lblTotalPasien";
             this.lblTotalPasien.Size = new System.Drawing.Size(100, 23);
             this.lblTotalPasien.TabIndex = 0;
-
+          
             this.lblCardDokter.Location = new System.Drawing.Point(0, 0);
             this.lblCardDokter.Name = "lblCardDokter";
             this.lblCardDokter.Size = new System.Drawing.Size(100, 23);
             this.lblCardDokter.TabIndex = 0;
-
+         
             this.lblTotalDokter.Location = new System.Drawing.Point(0, 0);
             this.lblTotalDokter.Name = "lblTotalDokter";
             this.lblTotalDokter.Size = new System.Drawing.Size(100, 23);
             this.lblTotalDokter.TabIndex = 0;
-
+           
             this.lblCardMenunggu.Location = new System.Drawing.Point(0, 0);
             this.lblCardMenunggu.Name = "lblCardMenunggu";
             this.lblCardMenunggu.Size = new System.Drawing.Size(100, 23);
             this.lblCardMenunggu.TabIndex = 0;
-
+           
             this.lblMenunggu.Location = new System.Drawing.Point(0, 0);
             this.lblMenunggu.Name = "lblMenunggu";
             this.lblMenunggu.Size = new System.Drawing.Size(100, 23);
             this.lblMenunggu.TabIndex = 0;
+        
+           dataGridViewCellStyle2.Alignment =
+                System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 
+            dataGridViewCellStyle2.BackColor =
+                System.Drawing.Color.FromArgb(41, 128, 185);
+
+            dataGridViewCellStyle2.ForeColor =
+                System.Drawing.Color.White;
+
+            dataGridViewCellStyle2.Font =
+                new System.Drawing.Font("Segoe UI", 10F);
+
+            dataGridViewCellStyle2.WrapMode =
+                System.Windows.Forms.DataGridViewTriState.True;
+
+            this.dgvDokter.ColumnHeadersDefaultCellStyle =
+                dataGridViewCellStyle2;
+
+            this.dgvDokter.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDokter.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvDokter.ColumnHeadersHeight = 36;
+            this.dgvDokter.EnableHeadersVisualStyles = false;
+            this.dgvDokter.Location = new System.Drawing.Point(10, 90);
+            this.dgvDokter.Name = "dgvDokter";
+            this.dgvDokter.ReadOnly = true;
+            this.dgvDokter.RowHeadersWidth = 51;
+            this.dgvDokter.Size = new System.Drawing.Size(1050, 440);
+            this.dgvDokter.TabIndex = 1;
+          
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1082, 633);
             this.Controls.Add(this.tabControl);
@@ -490,12 +563,14 @@ namespace BookingKontrolPasien.Forms
             this.tabBooking.ResumeLayout(false);
             this.panelFilterBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooking)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJadwal)).EndInit();
             this.tabDokter.ResumeLayout(false);
             this.panelFormDokter.ResumeLayout(false);
             this.panelFormDokter.PerformLayout();
             this.tabJadwal.ResumeLayout(false);
             this.panelFormJadwal.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudKuota)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDokter)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -548,6 +623,7 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.DateTimePicker dtpSelesai;
         private System.Windows.Forms.Label lblKuota;
         private System.Windows.Forms.NumericUpDown nudKuota;
+        private System.Windows.Forms.DataGridView dgvJadwal;
         private System.Windows.Forms.DataGridView dgvDokter;
         private System.Windows.Forms.Button btnTambahJadwal;
     }
