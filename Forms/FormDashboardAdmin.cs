@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using BookingKontrolPasien.Helpers;
+using System.Text.RegularExpressions;
 
 namespace BookingKontrolPasien.Forms
 {
@@ -469,6 +470,16 @@ namespace BookingKontrolPasien.Forms
                 LoadDokter();
                 LoadDokterCombo();
                 LoadSummary();
+
+                if (!Regex.IsMatch(
+                    txtNamaDokter.Text.Trim(),
+                    @"^[a-zA-Z ]+$"))
+                {
+                    MessageBox.Show(
+                        "Nama dokter hanya boleh huruf dan spasi.");
+
+                    return;
+                }
             }
             catch (Exception ex)
             {
