@@ -145,7 +145,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat booking: " + ex.Message);
+                    "Gagal memuat booking: " + ex.Message); 
             }
         }
 
