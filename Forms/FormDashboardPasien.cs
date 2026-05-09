@@ -117,7 +117,7 @@ namespace BookingKontrolPasien.Forms
             dgvJadwal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvJadwal.RowHeadersVisible = false;
             dgvJadwal.ReadOnly = true;
-            dgvJadwal.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvJadwal.SelectionMode = DataGridViewSelectionMode.FullRowSelect; 
         }
 
         private void btnBooking_Click(object sender, EventArgs e)
