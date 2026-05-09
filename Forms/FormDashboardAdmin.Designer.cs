@@ -625,6 +625,6 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.NumericUpDown nudKuota;
         private System.Windows.Forms.DataGridView dgvJadwal;
         private System.Windows.Forms.DataGridView dgvDokter;
-        private System.Windows.Forms.Button btnTambahJadwal;
+        private System.Windows.Forms.Button btnTambahJadwal;  
     }
 }
