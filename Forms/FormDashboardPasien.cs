@@ -96,7 +96,7 @@ namespace BookingKontrolPasien.Forms
             EventArgs e)
                 {
                     LoadRiwayatBooking(
-                        txtCariRiwayat.Text.Trim());
+                        txtCariRiwayat.Text.Trim()); 
                 }
 
         private void LoadJadwalTersedia()
