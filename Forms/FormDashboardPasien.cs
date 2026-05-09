@@ -261,7 +261,7 @@ namespace BookingKontrolPasien.Forms
                     case "disetujui": row.DefaultCellStyle.BackColor = Color.FromArgb(200, 240, 200); break;
                     case "ditolak": row.DefaultCellStyle.BackColor = Color.FromArgb(255, 200, 200); break;
                     case "selesai": row.DefaultCellStyle.BackColor = Color.FromArgb(220, 220, 255); break;
-                    case "batal": row.DefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220); break;
+                    case "batal": row.DefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220); break; 
                 }
             }
         }
