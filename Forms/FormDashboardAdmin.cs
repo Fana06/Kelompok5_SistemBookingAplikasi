@@ -227,7 +227,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat jadwal: " + ex.Message);
+                    "Gagal memuat jadwal: " + ex.Message); 
             }
         }
 
