@@ -245,7 +245,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat combo dokter: " + ex.Message);
+                    "Gagal memuat combo dokter: " + ex.Message); 
             }
         }
 
@@ -296,7 +296,7 @@ namespace BookingKontrolPasien.Forms
                     case "selesai":
                         row.DefaultCellStyle.BackColor =
                             Color.FromArgb(220, 220, 255);
-                        break;
+                        break; 
                 }
             }
         }
