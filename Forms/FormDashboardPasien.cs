@@ -171,7 +171,7 @@ namespace BookingKontrolPasien.Forms
             txtKeluhan.Clear();
             LoadRiwayatBooking();
             LoadJadwalTersedia();
-            tabControl.SelectedIndex = 0;
+            tabControl.SelectedIndex = 0; 
         }
 
         private void btnBatalBooking_Click(object sender, EventArgs e)
