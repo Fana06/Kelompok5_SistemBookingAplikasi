@@ -286,6 +286,6 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.Label lblHPKey;
         private System.Windows.Forms.Label lblProfilHP;
         private System.Windows.Forms.Label lblEmailKey;
-        private System.Windows.Forms.Label lblProfilEmail;
+        private System.Windows.Forms.Label lblProfilEmail; 
     }
 }
