@@ -203,7 +203,7 @@ namespace BookingKontrolPasien.Forms
                 MessageBox.Show("Booking berhasil dibatalkan.", "Info",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadRiwayatBooking();
-                LoadJadwalTersedia();
+                LoadJadwalTersedia(); 
             }
         }
 
