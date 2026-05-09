@@ -189,7 +189,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Error LoadDokter: " + ex.Message);
+                    "Error LoadDokter: " + ex.Message); 
             }
         }
 
