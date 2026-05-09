@@ -150,7 +150,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void LoadDokter()
+        private void LoadDokter(string keyword = "")
         {
             try
             {
@@ -165,9 +165,19 @@ namespace BookingKontrolPasien.Forms
                 ELSE 'Nonaktif'
             END AS Status
         FROM dokter
+        WHERE
+            nama_dokter LIKE @key
+            OR spesialisasi LIKE @key
         ORDER BY id";
 
-                DataTable dt = DBHelper.ExecuteQuery(query);
+                DataTable dt = DBHelper.ExecuteQuery(
+    query,
+    new[]
+    {
+        new SqlParameter(
+            "@key",
+            "%" + keyword + "%")
+    });
 
                 dgvDokter.Columns.Clear();
 
@@ -432,7 +442,15 @@ namespace BookingKontrolPasien.Forms
 
                     return;
                 }
+                if (!Regex.IsMatch(
+    txtNamaDokter.Text.Trim(),
+    @"^[a-zA-Z ]+$"))
+                {
+                    MessageBox.Show(
+                        "Nama dokter hanya boleh huruf dan spasi.");
 
+                    return;
+                }
                 DBHelper.ExecuteNonQuery(
                     @"INSERT INTO dokter
                     (
@@ -470,16 +488,6 @@ namespace BookingKontrolPasien.Forms
                 LoadDokter();
                 LoadDokterCombo();
                 LoadSummary();
-
-                if (!Regex.IsMatch(
-                    txtNamaDokter.Text.Trim(),
-                    @"^[a-zA-Z ]+$"))
-                {
-                    MessageBox.Show(
-                        "Nama dokter hanya boleh huruf dan spasi.");
-
-                    return;
-                }
             }
             catch (Exception ex)
             {
@@ -804,6 +812,14 @@ namespace BookingKontrolPasien.Forms
             EventArgs e)
         {
             LoadDokter();
+        }
+
+        private void txtCariDokter_TextChanged(
+    object sender,
+    EventArgs e)
+        {
+            LoadDokter(
+                txtCariDokter.Text.Trim());
         }
     }
 }

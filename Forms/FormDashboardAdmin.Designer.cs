@@ -47,6 +47,11 @@ namespace BookingKontrolPasien.Forms
             this.txtNoHPDokter = new System.Windows.Forms.TextBox();
             this.btnTambahDokter = new System.Windows.Forms.Button();
             this.btnNonaktifDokter = new System.Windows.Forms.Button();
+            this.txtCariDokter =
+    new System.Windows.Forms.TextBox();
+
+            this.lblCariDokter =
+                new System.Windows.Forms.Label();
             this.tabJadwal = new System.Windows.Forms.TabPage();
             this.panelFormJadwal = new System.Windows.Forms.Panel();
             this.lblDokterJadwal = new System.Windows.Forms.Label();
@@ -286,11 +291,35 @@ namespace BookingKontrolPasien.Forms
             this.panelFormDokter.Controls.Add(this.txtNoHPDokter);
             this.panelFormDokter.Controls.Add(this.btnTambahDokter);
             this.panelFormDokter.Controls.Add(this.btnNonaktifDokter);
+            this.panelFormDokter.Controls.Add(this.lblCariDokter);
+            this.panelFormDokter.Controls.Add(this.txtCariDokter);
             this.panelFormDokter.Location = new System.Drawing.Point(10, 10);
             this.panelFormDokter.Name = "panelFormDokter";
-            this.panelFormDokter.Size = new System.Drawing.Size(1050, 70);
+            this.panelFormDokter.Size =
+    new System.Drawing.Size(1050, 100);
             this.panelFormDokter.TabIndex = 0;
-            
+
+            this.lblCariDokter.Text = "Cari:";
+
+            this.lblCariDokter.Location =
+                new System.Drawing.Point(10, 40);
+
+            this.lblCariDokter.Size =
+                new System.Drawing.Size(40, 20);
+
+            this.txtCariDokter.Location =
+    new System.Drawing.Point(55, 38);
+
+            this.txtCariDokter.Size =
+                new System.Drawing.Size(250, 23);
+
+            this.txtCariDokter.BorderStyle =
+                System.Windows.Forms.BorderStyle.FixedSingle;
+
+            this.txtCariDokter.TextChanged +=
+                new System.EventHandler(
+                    this.txtCariDokter_TextChanged);
+
             this.lblNamaDokter.Location = new System.Drawing.Point(10, 10);
             this.lblNamaDokter.Name = "lblNamaDokter";
             this.lblNamaDokter.Size = new System.Drawing.Size(90, 18);
@@ -629,6 +658,8 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.TextBox txtNoHPDokter;
         private System.Windows.Forms.Button btnTambahDokter;
         private System.Windows.Forms.Button btnNonaktifDokter;
+        private System.Windows.Forms.TextBox txtCariDokter;
+        private System.Windows.Forms.Label lblCariDokter;
         private System.Windows.Forms.TabPage tabJadwal;
         private System.Windows.Forms.Panel panelFormJadwal;
         private System.Windows.Forms.Label lblDokterJadwal;
