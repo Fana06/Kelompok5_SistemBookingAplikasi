@@ -473,7 +473,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal tambah dokter: " + ex.Message);
+                    "Gagal tambah dokter: " + ex.Message); 
             }
         }
 
