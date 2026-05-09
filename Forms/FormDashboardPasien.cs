@@ -20,7 +20,7 @@ namespace BookingKontrolPasien.Forms
             SetupProfileRow(this.lblJKKey, "Jenis Kelamin", this.lblProfilJK, yStart + gap * 3);
             SetupProfileRow(this.lblAlamatKey, "Alamat", this.lblProfilAlamat, yStart + gap * 4);
             SetupProfileRow(this.lblHPKey, "No. HP", this.lblProfilHP, yStart + gap * 5);
-            SetupProfileRow(this.lblEmailKey, "Email", this.lblProfilEmail, yStart + gap * 6);
+            SetupProfileRow(this.lblEmailKey, "Email", this.lblProfilEmail, yStart + gap * 6); 
         }
 
         private void FormDashboardPasien_Load(object sender, EventArgs e)
