@@ -60,6 +60,7 @@ namespace BookingKontrolPasien.Forms
             this.lblKuota = new System.Windows.Forms.Label();
             this.nudKuota = new System.Windows.Forms.NumericUpDown();
             this.btnTambahJadwal = new System.Windows.Forms.Button();
+            this.btnHapusJadwal = new System.Windows.Forms.Button();
             this.dgvJadwal = new System.Windows.Forms.DataGridView();
             this.lblCardPasien = new System.Windows.Forms.Label();
             this.lblTotalPasien = new System.Windows.Forms.Label();
@@ -373,6 +374,7 @@ namespace BookingKontrolPasien.Forms
             this.panelFormJadwal.Controls.Add(this.lblKuota);
             this.panelFormJadwal.Controls.Add(this.nudKuota);
             this.panelFormJadwal.Controls.Add(this.btnTambahJadwal);
+            this.panelFormJadwal.Controls.Add(this.btnHapusJadwal);
             this.panelFormJadwal.Location = new System.Drawing.Point(10, 10);
             this.panelFormJadwal.Name = "panelFormJadwal";
             this.panelFormJadwal.Size = new System.Drawing.Size(1050, 70);
@@ -486,7 +488,23 @@ namespace BookingKontrolPasien.Forms
             this.btnTambahJadwal.Text = "+ Tambah";
             this.btnTambahJadwal.UseVisualStyleBackColor = false;
             this.btnTambahJadwal.Click += new System.EventHandler(this.btnTambahJadwal_Click);
-            
+            this.btnHapusJadwal.BackColor = System.Drawing.Color.FromArgb(231, 76, 60);
+            this.btnHapusJadwal.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHapusJadwal.FlatAppearance.BorderSize = 0;
+            this.btnHapusJadwal.FlatStyle =
+                System.Windows.Forms.FlatStyle.Flat;
+            this.btnHapusJadwal.ForeColor =
+                System.Drawing.Color.White;
+            this.btnHapusJadwal.Location =
+                new System.Drawing.Point(930, 40);
+            this.btnHapusJadwal.Name = "btnHapusJadwal";
+            this.btnHapusJadwal.Size =
+                new System.Drawing.Size(100, 25);
+            this.btnHapusJadwal.Text = "Hapus";
+            this.btnHapusJadwal.UseVisualStyleBackColor = false;
+            this.btnHapusJadwal.Click +=
+                new System.EventHandler(this.btnHapusJadwal_Click);
+
             this.lblCardPasien.Location = new System.Drawing.Point(0, 0);
             this.lblCardPasien.Name = "lblCardPasien";
             this.lblCardPasien.Size = new System.Drawing.Size(100, 23);
@@ -625,6 +643,7 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.NumericUpDown nudKuota;
         private System.Windows.Forms.DataGridView dgvJadwal;
         private System.Windows.Forms.DataGridView dgvDokter;
-        private System.Windows.Forms.Button btnTambahJadwal;  
+        private System.Windows.Forms.Button btnTambahJadwal;
+        private System.Windows.Forms.Button btnHapusJadwal;
     }
 }

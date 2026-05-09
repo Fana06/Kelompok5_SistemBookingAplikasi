@@ -601,6 +601,52 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
+        private void btnHapusJadwal_Click(
+    object sender,
+    EventArgs e)
+        {
+            try
+            {
+                if (dgvJadwal.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show(
+                        "Pilih jadwal terlebih dahulu.");
+
+                    return;
+                }
+
+                int id = Convert.ToInt32(
+                    dgvJadwal.SelectedRows[0]
+                    .Cells["ID"].Value);
+
+                DialogResult result = MessageBox.Show(
+                    "Yakin ingin menghapus jadwal ini?",
+                    "Konfirmasi",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result != DialogResult.Yes)
+                    return;
+
+                DBHelper.ExecuteNonQuery(
+                    "DELETE FROM jadwal_dokter WHERE id=@id",
+                    new[]
+                    {
+                new SqlParameter("@id", id)
+                    });
+
+                MessageBox.Show(
+                    "Jadwal berhasil dihapus.");
+
+                LoadJadwal();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Gagal menghapus jadwal: " + ex.Message);
+            }
+        }
+
         private void tabControl_SelectedIndexChanged(
             object sender,
             EventArgs e)
