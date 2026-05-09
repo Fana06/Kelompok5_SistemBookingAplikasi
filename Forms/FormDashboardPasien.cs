@@ -88,7 +88,7 @@ namespace BookingKontrolPasien.Forms
 
             dgvRiwayat.DataSource = dt;
 
-            FormatGridStatus(dgvRiwayat, "Status");
+            FormatGridStatus(dgvRiwayat, "Status"); 
         }
 
         private void txtCariRiwayat_TextChanged(
