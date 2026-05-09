@@ -515,7 +515,7 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal ubah status dokter: " + ex.Message);
+                    "Gagal ubah status dokter: " + ex.Message); 
             }
         }
 
