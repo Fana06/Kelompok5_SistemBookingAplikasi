@@ -1,10 +1,11 @@
+using BookingKontrolPasien.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Windows.Forms;
-using BookingKontrolPasien.Helpers;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace BookingKontrolPasien.Forms
 {
@@ -218,6 +219,7 @@ namespace BookingKontrolPasien.Forms
                     j.kuota AS Kuota
                 FROM jadwal_dokter j
                 JOIN dokter d ON j.dokter_id = d.id
+                WHERE j.status_aktif = 1
                 ORDER BY j.id";
 
                 DataTable dt = DBHelper.ExecuteQuery(query);
@@ -639,7 +641,7 @@ namespace BookingKontrolPasien.Forms
                     .Cells["ID"].Value);
 
                 DialogResult result = MessageBox.Show(
-                    "Yakin ingin menghapus jadwal ini?",
+                    "Yakin ingin menghapus jadwal ini dari daftar?",
                     "Konfirmasi",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -648,14 +650,16 @@ namespace BookingKontrolPasien.Forms
                     return;
 
                 DBHelper.ExecuteNonQuery(
-                    "DELETE FROM jadwal_dokter WHERE id=@id",
+                  @"UPDATE jadwal_dokter
+                  SET status_aktif = 0
+                  WHERE id=@id",
                     new[]
                     {
                 new SqlParameter("@id", id)
                     });
 
                 MessageBox.Show(
-                    "Jadwal berhasil dihapus.");
+                    "Jadwal berhasil dihapus dari daftar.");
 
                 LoadJadwal();
             }
