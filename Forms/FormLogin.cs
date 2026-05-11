@@ -26,13 +26,36 @@ namespace BookingKontrolPasien.Forms
                 return;
             }
 
-            string query = "SELECT id, email, role FROM users WHERE email=@email AND password=@password";
-            SqlParameter[] param = {
-                new SqlParameter("@email", email),
-                new SqlParameter("@password", password)
-            };
+            DataTable dt = new DataTable();
 
-            DataTable dt = DBHelper.ExecuteQuery(query, param);
+            using (SqlConnection conn =
+                DBHelper.GetConnection())
+            {
+                conn.Open();
+
+                using (SqlCommand cmd =
+                    new SqlCommand(
+                        "sp_LoginUser",
+                        conn))
+                {
+                    cmd.CommandType =
+                        CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue(
+                        "@email",
+                        email);
+
+                    cmd.Parameters.AddWithValue(
+                        "@password",
+                        password);
+
+                    using (SqlDataAdapter da =
+                        new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
 
             if (dt.Rows.Count > 0)
             {
