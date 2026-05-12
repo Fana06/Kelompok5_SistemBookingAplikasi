@@ -66,79 +66,92 @@ namespace BookingKontrolPasien.Forms
 
         private void UpdateExpiredBookings()
         {
-            string query = @"
-            UPDATE b
-            SET b.status_booking = 'selesai'
-            FROM booking b
-            JOIN jadwal_dokter j ON b.jadwal_id = j.id
-            WHERE 
-                b.status_booking IN ('menunggu', 'disetujui')
-                AND DATEADD(
-                    SECOND,
-                    DATEDIFF(SECOND, '00:00:00', j.jam_selesai),
-                    CAST(b.tanggal_booking AS DATETIME)
-                ) < GETDATE()
-            ";
+            using (SqlConnection conn =
+                DBHelper.GetConnection())
+            {
+                conn.Open();
 
-            DBHelper.ExecuteNonQuery(query); 
+                using (SqlCommand cmd =
+                    new SqlCommand(
+                        "sp_UpdateExpiredBookings",
+                        conn))
+                {
+                    cmd.CommandType =
+                        CommandType.StoredProcedure;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private void LoadSummary()
         {
-            int totalPasien = Convert.ToInt32(
-                DBHelper.ExecuteScalar("SELECT COUNT(*) FROM pasien"));
+            DataTable dt = new DataTable();
 
-            int totalDokter = Convert.ToInt32(
-                DBHelper.ExecuteScalar(
-                    "SELECT COUNT(*) FROM dokter WHERE status_aktif=1"));
+            using (SqlConnection conn =
+                DBHelper.GetConnection())
+            {
+                conn.Open();
 
-            int totalBooking = Convert.ToInt32(
-                DBHelper.ExecuteScalar(
-                    "SELECT COUNT(*) FROM booking WHERE status_booking='menunggu'"));
+                using (SqlCommand cmd =
+                    new SqlCommand(
+                        "sp_LoadSummary",
+                        conn))
+                {
+                    cmd.CommandType =
+                        CommandType.StoredProcedure;
 
-            lblTotalPasien.Text = totalPasien.ToString();
-            lblTotalDokter.Text = totalDokter.ToString();
-            lblMenunggu.Text = totalBooking.ToString();
+                    using (SqlDataAdapter da =
+                        new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+
+            if (dt.Rows.Count > 0)
+            {
+                lblTotalPasien.Text =
+                    dt.Rows[0]["total_pasien"].ToString();
+
+                lblTotalDokter.Text =
+                    dt.Rows[0]["total_dokter"].ToString();
+
+                lblMenunggu.Text =
+                    dt.Rows[0]["total_booking"].ToString();
+            }
         }
 
-        private void LoadBooking(string filter = "")
+private void LoadBooking(string filter = "")
         {
             try
             {
-                string query = @"
-                SELECT 
-                    b.id AS booking_id,
-                    p.nama_lengkap AS nama_pasien,
-                    p.nik,
-                    d.nama_dokter,
-                    j.hari,
-                    CONVERT(VARCHAR(5), j.jam_mulai, 108) AS jam_mulai,
-                    b.tanggal_booking,
-                    b.keluhan,
-                    b.status_booking
-                FROM booking b
-                JOIN pasien p ON b.pasien_id = p.id
-                JOIN jadwal_dokter j ON b.jadwal_id = j.id
-                JOIN dokter d ON j.dokter_id = d.id";
+                DataTable dt = new DataTable();
 
-                if (!string.IsNullOrEmpty(filter))
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
                 {
-                    query += " WHERE b.status_booking = @filter";
-                }
+                    conn.Open();
 
-                query += " ORDER BY b.tanggal_dibuat DESC";
-
-                SqlParameter[] param = null;
-
-                if (!string.IsNullOrEmpty(filter))
-                {
-                    param = new[]
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_LoadBooking",
+                            conn))
                     {
-                        new SqlParameter("@filter", filter)
-                    };
-                }
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
 
-                DataTable dt = DBHelper.ExecuteQuery(query, param);
+                        cmd.Parameters.AddWithValue(
+                            "@filter",
+                            filter);
+
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
 
                 dgvBooking.DataSource = dt;
 
@@ -147,38 +160,42 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat booking: " + ex.Message); 
+                    "Gagal memuat booking: "
+                    + ex.Message);
             }
         }
 
-        private void LoadDokter(string keyword = "")
+
+private void LoadDokter(string keyword = "")
         {
             try
             {
-                string query = @"
-        SELECT 
-            id AS ID,
-            nama_dokter AS Nama,
-            spesialisasi AS Spesialisasi,
-            no_hp AS NoHP,
-            CASE
-                WHEN status_aktif = 1 THEN 'Aktif'
-                ELSE 'Nonaktif'
-            END AS Status
-        FROM dokter
-        WHERE
-            nama_dokter LIKE @key
-            OR spesialisasi LIKE @key
-        ORDER BY id";
+                DataTable dt = new DataTable();
 
-                DataTable dt = DBHelper.ExecuteQuery(
-    query,
-    new[]
-    {
-        new SqlParameter(
-            "@key",
-            "%" + keyword + "%")
-    });
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_SearchDokter",
+                            conn))
+                    {
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@keyword",
+                            keyword);
+
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
 
                 dgvDokter.Columns.Clear();
 
@@ -201,28 +218,38 @@ namespace BookingKontrolPasien.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Error LoadDokter: " + ex.Message); 
+                    "Error LoadDokter: "
+                    + ex.Message);
             }
         }
 
-        private void LoadJadwal()
+
+private void LoadJadwal()
         {
             try
             {
-                string query = @"
-                SELECT 
-                    j.id AS ID,
-                    d.nama_dokter AS Dokter,
-                    j.hari AS Hari,
-                    CONVERT(VARCHAR(5), j.jam_mulai, 108) AS Mulai,
-                    CONVERT(VARCHAR(5), j.jam_selesai, 108) AS Selesai,
-                    j.kuota AS Kuota
-                FROM jadwal_dokter j
-                JOIN dokter d ON j.dokter_id = d.id
-                WHERE j.status_aktif = 1
-                ORDER BY j.id";
+                DataTable dt = new DataTable();
 
-                DataTable dt = DBHelper.ExecuteQuery(query);
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_LoadJadwal",
+                            conn))
+                    {
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
 
                 dgvJadwal.DataSource = dt;
 
@@ -235,32 +262,61 @@ namespace BookingKontrolPasien.Forms
                     DataGridViewSelectionMode.FullRowSelect;
 
                 dgvJadwal.AllowUserToAddRows = false;
+
                 dgvJadwal.ReadOnly = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat jadwal: " + ex.Message); 
+                    "Gagal memuat jadwal: "
+                    + ex.Message);
             }
         }
 
-        private void LoadDokterCombo()
+
+private void LoadDokterCombo()
         {
             try
             {
-                DataTable dt = DBHelper.ExecuteQuery(
-                    "SELECT id, nama_dokter FROM dokter WHERE status_aktif=1");
+                DataTable dt = new DataTable();
+
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_LoadDokterCombo",
+                            conn))
+                    {
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
 
                 cmbDokterJadwal.DataSource = dt;
-                cmbDokterJadwal.DisplayMember = "nama_dokter";
-                cmbDokterJadwal.ValueMember = "id";
+
+                cmbDokterJadwal.DisplayMember =
+                    "nama_dokter";
+
+                cmbDokterJadwal.ValueMember =
+                    "id";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Gagal memuat combo dokter: " + ex.Message); 
+                    "Gagal memuat combo dokter: "
+                    + ex.Message);
             }
         }
+
 
         private void FormatGridBooking()
         {
@@ -390,13 +446,30 @@ namespace BookingKontrolPasien.Forms
                     dgvBooking.SelectedRows[0]
                     .Cells["booking_id"].Value);
 
-                DBHelper.ExecuteNonQuery(
-                    "UPDATE booking SET status_booking=@s WHERE id=@id",
-                    new SqlParameter[]
+                using (SqlConnection conn =
+    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_UpdateBookingStatus",
+                            conn))
                     {
-                        new SqlParameter("@s", status),
-                        new SqlParameter("@id", id)
-                    });
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@id",
+                            id);
+
+                        cmd.Parameters.AddWithValue(
+                            "@status",
+                            status);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 MessageBox.Show(
                     $"Status booking diubah menjadi '{status}'.");
@@ -453,32 +526,34 @@ namespace BookingKontrolPasien.Forms
 
                     return;
                 }
-                DBHelper.ExecuteNonQuery(
-                    @"INSERT INTO dokter
-                    (
-                        nama_dokter,
-                        spesialisasi,
-                        no_hp,
-                        status_aktif
-                    )
-                    VALUES
-                    (
-                        @n,
-                        @s,
-                        @hp,
-                        1
-                    )",
-                    new SqlParameter[]
+                using (SqlConnection conn =
+    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_InsertDokter",
+                            conn))
                     {
-                        new SqlParameter("@n",
-                            txtNamaDokter.Text.Trim()),
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
 
-                        new SqlParameter("@s",
-                            txtSpesialisasi.Text.Trim()),
+                        cmd.Parameters.AddWithValue(
+                            "@nama",
+                            txtNamaDokter.Text.Trim());
 
-                        new SqlParameter("@hp",
-                            txtNoHPDokter.Text.Trim())
-                    });
+                        cmd.Parameters.AddWithValue(
+                            "@spesialisasi",
+                            txtSpesialisasi.Text.Trim());
+
+                        cmd.Parameters.AddWithValue(
+                            "@hp",
+                            txtNoHPDokter.Text.Trim());
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 MessageBox.Show(
                     "Dokter berhasil ditambahkan.");
@@ -516,18 +591,26 @@ namespace BookingKontrolPasien.Forms
                     dgvDokter.SelectedRows[0]
                     .Cells["ID"].Value);
 
-                DBHelper.ExecuteNonQuery(
-                    @"UPDATE dokter
-                    SET status_aktif =
-                    CASE
-                        WHEN status_aktif = 1 THEN 0
-                        ELSE 1
-                    END
-                    WHERE id=@id",
-                    new[]
+                using (SqlConnection conn =
+     DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_ToggleDokterStatus",
+                            conn))
                     {
-                        new SqlParameter("@id", id)
-                    });
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@id",
+                            id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 LoadDokter();
                 LoadDokterCombo();
@@ -570,45 +653,42 @@ namespace BookingKontrolPasien.Forms
                     return;
                 }
 
-                DBHelper.ExecuteNonQuery(
-                    @"INSERT INTO jadwal_dokter
-                    (
-                        dokter_id,
-                        hari,
-                        jam_mulai,
-                        jam_selesai,
-                        kuota
-                    )
-                    VALUES
-                    (
-                        @did,
-                        @hari,
-                        @mulai,
-                        @selesai,
-                        @kuota
-                    )",
-                    new SqlParameter[]
+                using (SqlConnection conn =
+    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_InsertJadwal",
+                            conn))
                     {
-                        new SqlParameter(
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
                             "@did",
-                            cmbDokterJadwal.SelectedValue),
+                            cmbDokterJadwal.SelectedValue);
 
-                        new SqlParameter(
+                        cmd.Parameters.AddWithValue(
                             "@hari",
-                            cmbHari.SelectedItem.ToString()),
+                            cmbHari.SelectedItem.ToString());
 
-                        new SqlParameter(
+                        cmd.Parameters.AddWithValue(
                             "@mulai",
-                            dtpMulai.Value.TimeOfDay),
+                            dtpMulai.Value.TimeOfDay);
 
-                        new SqlParameter(
+                        cmd.Parameters.AddWithValue(
                             "@selesai",
-                            dtpSelesai.Value.TimeOfDay),
+                            dtpSelesai.Value.TimeOfDay);
 
-                        new SqlParameter(
+                        cmd.Parameters.AddWithValue(
                             "@kuota",
-                            (int)nudKuota.Value)
-                    });
+                            (int)nudKuota.Value);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 MessageBox.Show(
                     "Jadwal berhasil ditambahkan.");
@@ -649,14 +729,26 @@ namespace BookingKontrolPasien.Forms
                 if (result != DialogResult.Yes)
                     return;
 
-                DBHelper.ExecuteNonQuery(
-                  @"UPDATE jadwal_dokter
-                  SET status_aktif = 0
-                  WHERE id=@id",
-                    new[]
+                using (SqlConnection conn =
+    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_HapusJadwal",
+                            conn))
                     {
-                new SqlParameter("@id", id)
-                    });
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@id",
+                            id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 MessageBox.Show(
                     "Jadwal berhasil dihapus dari daftar.");
@@ -728,26 +820,34 @@ namespace BookingKontrolPasien.Forms
                     Convert.ToInt32(
                         cmbDokterJadwal.SelectedValue);
 
-                string query = @"
-                SELECT
-                    j.id AS ID,
-                    d.nama_dokter AS Dokter,
-                    j.hari AS Hari,
-                    CONVERT(VARCHAR(5), j.jam_mulai, 108) AS Mulai,
-                    CONVERT(VARCHAR(5), j.jam_selesai, 108) AS Selesai,
-                    j.kuota AS Kuota
-                FROM jadwal_dokter j
-                JOIN dokter d ON j.dokter_id = d.id
-                WHERE d.id = @id
-                ORDER BY j.id";
+                DataTable dt = new DataTable();
 
-                DataTable dt =
-                    DBHelper.ExecuteQuery(
-                        query,
-                        new[]
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_FilterJadwalDokter",
+                            conn))
+                    {
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@id",
+                            dokterId);
+
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
                         {
-                            new SqlParameter("@id", dokterId)
-                        });
+                            da.Fill(dt);
+                        }
+                    }
+                }
+
+                dgvJadwal.DataSource = dt;
 
                 dgvJadwal.DataSource = dt;
             }
