@@ -9,14 +9,18 @@ namespace BookingKontrolPasien.Forms
 {
     public partial class FormDashboardPasien : Form
     {
-        private BindingSource bsRiwayat =
+        private readonly BindingSource bsRiwayat =
     new BindingSource();
 
-        private BindingSource bsJadwal =
+        private readonly BindingSource bsJadwal =
             new BindingSource();
+
         public FormDashboardPasien()
         {
             InitializeComponent();
+
+            bindingNavigator1.BindingSource =
+            bsRiwayat;
 
             int yStart = 70;
             int gap = 52;
