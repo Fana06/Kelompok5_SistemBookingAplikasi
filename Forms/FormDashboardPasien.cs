@@ -9,6 +9,11 @@ namespace BookingKontrolPasien.Forms
 {
     public partial class FormDashboardPasien : Form
     {
+        private BindingSource bsRiwayat =
+    new BindingSource();
+
+        private BindingSource bsJadwal =
+            new BindingSource();
         public FormDashboardPasien()
         {
             InitializeComponent();
