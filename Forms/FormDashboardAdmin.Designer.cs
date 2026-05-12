@@ -126,7 +126,7 @@ namespace BookingKontrolPasien.Forms
             this.btnLogout.TabIndex = 2;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            this.btnLogout.Click += new System.EventHandler(this.BtnLogout_Click);
            
             this.tabControl.Controls.Add(this.tabSummary);
             this.tabControl.Controls.Add(this.tabBooking);
@@ -139,7 +139,7 @@ namespace BookingKontrolPasien.Forms
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1082, 573);
             this.tabControl.TabIndex = 0;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             
             this.tabSummary.Controls.Add(this.panelCards);
             this.tabSummary.Location = new System.Drawing.Point(4, 26);
@@ -157,7 +157,7 @@ namespace BookingKontrolPasien.Forms
             this.panelCards.Name = "panelCards";
             this.panelCards.Size = new System.Drawing.Size(1040, 200);
             this.panelCards.TabIndex = 0;
-            this.panelCards.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCards_Paint);
+            this.panelCards.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelCards_Paint);
             
             this.cardPasien.Location = new System.Drawing.Point(0, 0);
             this.cardPasien.Name = "cardPasien";
@@ -211,7 +211,7 @@ namespace BookingKontrolPasien.Forms
             this.cmbFilter.Name = "cmbFilter";
             this.cmbFilter.Size = new System.Drawing.Size(140, 25);
             this.cmbFilter.TabIndex = 1;
-            this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.cmbFilter_SelectedIndexChanged);
+            this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.CmbFilter_SelectedIndexChanged);
 
             this.btnSetujui.BackColor = System.Drawing.Color.FromArgb(39, 174, 96);
             this.btnSetujui.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -224,7 +224,7 @@ namespace BookingKontrolPasien.Forms
             this.btnSetujui.TabIndex = 2;
             this.btnSetujui.Text = "✔ Setujui";
             this.btnSetujui.UseVisualStyleBackColor = false;
-            this.btnSetujui.Click += new System.EventHandler(this.btnSetujui_Click);
+            this.btnSetujui.Click += new System.EventHandler(this.BtnSetujui_Click);
 
             this.btnTolak.BackColor = System.Drawing.Color.FromArgb(231, 76, 60);
             this.btnTolak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -237,7 +237,7 @@ namespace BookingKontrolPasien.Forms
             this.btnTolak.TabIndex = 3;
             this.btnTolak.Text = "✖ Tolak";
             this.btnTolak.UseVisualStyleBackColor = false;
-            this.btnTolak.Click += new System.EventHandler(this.btnTolak_Click);
+            this.btnTolak.Click += new System.EventHandler(this.BtnTolak_Click);
 
             
             this.btnSelesai.BackColor = System.Drawing.Color.FromArgb(52, 152, 219);
@@ -251,7 +251,7 @@ namespace BookingKontrolPasien.Forms
             this.btnSelesai.TabIndex = 4;
             this.btnSelesai.Text = "✓ Selesai";
             this.btnSelesai.UseVisualStyleBackColor = false;
-            this.btnSelesai.Click += new System.EventHandler(this.btnSelesai_Click);
+            this.btnSelesai.Click += new System.EventHandler(this.BtnSelesai_Click);
              
             this.dgvBooking.BackgroundColor = System.Drawing.Color.White;
             this.dgvBooking.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -279,7 +279,7 @@ namespace BookingKontrolPasien.Forms
             this.tabDokter.Size = new System.Drawing.Size(1074, 543);
             this.tabDokter.TabIndex = 2;
             this.tabDokter.Text = "  Data Dokter  ";
-            this.tabDokter.Click += new System.EventHandler(this.tabDokter_Click);
+            this.tabDokter.Click += new System.EventHandler(this.TabDokter_Click);
             
             this.panelFormDokter.BackColor = System.Drawing.Color.White;
             this.panelFormDokter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -318,7 +318,7 @@ namespace BookingKontrolPasien.Forms
 
             this.txtCariDokter.TextChanged +=
                 new System.EventHandler(
-                    this.txtCariDokter_TextChanged);
+                    this.TxtCariDokter_TextChanged);
 
             this.lblNamaDokter.Location = new System.Drawing.Point(10, 10);
             this.lblNamaDokter.Name = "lblNamaDokter";
@@ -367,7 +367,7 @@ namespace BookingKontrolPasien.Forms
             this.btnTambahDokter.TabIndex = 6;
             this.btnTambahDokter.Text = "+ Tambah";
             this.btnTambahDokter.UseVisualStyleBackColor = false;
-            this.btnTambahDokter.Click += new System.EventHandler(this.btnTambahDokter_Click);
+            this.btnTambahDokter.Click += new System.EventHandler(this.BtnTambahDokter_Click);
           
             this.btnNonaktifDokter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
             this.btnNonaktifDokter.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -380,7 +380,7 @@ namespace BookingKontrolPasien.Forms
             this.btnNonaktifDokter.TabIndex = 7;
             this.btnNonaktifDokter.Text = "Nonaktif/Aktif";
             this.btnNonaktifDokter.UseVisualStyleBackColor = false;
-            this.btnNonaktifDokter.Click += new System.EventHandler(this.btnNonaktifDokter_Click);
+            this.btnNonaktifDokter.Click += new System.EventHandler(this.BtnNonaktifDokter_Click);
             
             this.tabJadwal.Controls.Add(this.panelFormJadwal);
             this.tabJadwal.Controls.Add(this.dgvJadwal);
@@ -408,7 +408,7 @@ namespace BookingKontrolPasien.Forms
             this.panelFormJadwal.Name = "panelFormJadwal";
             this.panelFormJadwal.Size = new System.Drawing.Size(1050, 70);
             this.panelFormJadwal.TabIndex = 0;
-            this.panelFormJadwal.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFormJadwal_Paint);
+            this.panelFormJadwal.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelFormJadwal_Paint);
           
             this.dgvJadwal.BackgroundColor = System.Drawing.Color.White;
             this.dgvJadwal.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -431,7 +431,7 @@ namespace BookingKontrolPasien.Forms
             this.cmbDokterJadwal.Name = "cmbDokterJadwal";
             this.cmbDokterJadwal.Size = new System.Drawing.Size(180, 25);
             this.cmbDokterJadwal.TabIndex = 1;
-            this.cmbDokterJadwal.SelectedIndexChanged += new System.EventHandler(this.cmbDokterJadwal_SelectedIndexChanged);
+            this.cmbDokterJadwal.SelectedIndexChanged += new System.EventHandler(this.CmbDokterJadwal_SelectedIndexChanged);
            
             this.lblHari.Location = new System.Drawing.Point(260, 10);
             this.lblHari.Name = "lblHari";
@@ -516,7 +516,7 @@ namespace BookingKontrolPasien.Forms
             this.btnTambahJadwal.TabIndex = 10;
             this.btnTambahJadwal.Text = "+ Tambah";
             this.btnTambahJadwal.UseVisualStyleBackColor = false;
-            this.btnTambahJadwal.Click += new System.EventHandler(this.btnTambahJadwal_Click);
+            this.btnTambahJadwal.Click += new System.EventHandler(this.BtnTambahJadwal_Click);
             this.btnHapusJadwal.BackColor = System.Drawing.Color.FromArgb(231, 76, 60);
             this.btnHapusJadwal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHapusJadwal.FlatAppearance.BorderSize = 0;
@@ -532,7 +532,7 @@ namespace BookingKontrolPasien.Forms
             this.btnHapusJadwal.Text = "Hapus";
             this.btnHapusJadwal.UseVisualStyleBackColor = false;
             this.btnHapusJadwal.Click +=
-                new System.EventHandler(this.btnHapusJadwal_Click);
+                new System.EventHandler(this.BtnHapusJadwal_Click);
 
             this.lblCardPasien.Location = new System.Drawing.Point(0, 0);
             this.lblCardPasien.Name = "lblCardPasien";
