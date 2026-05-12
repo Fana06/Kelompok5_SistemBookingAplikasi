@@ -22,6 +22,9 @@ namespace BookingKontrolPasien.Forms
             bindingNavigator1.BindingSource =
             bsRiwayat;
 
+            bindingNavigator2.BindingSource =
+            bsJadwal;
+
             int yStart = 70;
             int gap = 52;
 
