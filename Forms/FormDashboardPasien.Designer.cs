@@ -92,13 +92,13 @@ namespace BookingKontrolPasien.Forms
             this.btnLogout.Location = new System.Drawing.Point(880, 15);
             this.btnLogout.Size = new System.Drawing.Size(90, 32);
             this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            this.btnLogout.Click += new System.EventHandler(this.BtnLogout_Click);
 
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.tabControl.Controls.AddRange(new System.Windows.Forms.TabPage[] {
                 this.tabRiwayat, this.tabBookingBaru, this.tabProfil });
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
 
             this.tabRiwayat.Text = "  Riwayat Booking  ";
 
@@ -117,7 +117,7 @@ namespace BookingKontrolPasien.Forms
 
             this.txtCariRiwayat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
-            this.txtCariRiwayat.TextChanged += new System.EventHandler(this.txtCariRiwayat_TextChanged);
+            this.txtCariRiwayat.TextChanged += new System.EventHandler(this.TxtCariRiwayat_TextChanged);
 
             this.btnBatalBooking.Text = "✖  Batalkan Booking";
             this.btnBatalBooking.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
@@ -128,7 +128,7 @@ namespace BookingKontrolPasien.Forms
             this.btnBatalBooking.Location = new System.Drawing.Point(810, 7);
             this.btnBatalBooking.Size = new System.Drawing.Size(140, 34);
             this.btnBatalBooking.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnBatalBooking.Click += new System.EventHandler(this.btnBatalBooking_Click);
+            this.btnBatalBooking.Click += new System.EventHandler(this.BtnBatalBooking_Click);
 
             this.panelRiwayatBar.Controls.Add(this.lblCariRiwayat);
             this.panelRiwayatBar.Controls.Add(this.txtCariRiwayat);
@@ -198,7 +198,7 @@ namespace BookingKontrolPasien.Forms
             this.btnBooking.Location = new System.Drawing.Point(810, 34);
             this.btnBooking.Size = new System.Drawing.Size(125, 80);
             this.btnBooking.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnBooking.Click += new System.EventHandler(this.btnBooking_Click);
+            this.btnBooking.Click += new System.EventHandler(this.BtnBooking_Click);
 
             this.panelKeluhanBar.Controls.AddRange(new System.Windows.Forms.Control[] {
                 this.lblKeluhan, this.txtKeluhan, this.btnBooking });
