@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using BookingKontrolPasien.Helpers;
@@ -52,41 +53,103 @@ namespace BookingKontrolPasien.Forms
                 return;
             }
 
-            try
+
+        try
             {
                 int userId = _existingUserId;
 
+
                 if (userId == 0)
                 {
-                    string qUser = "INSERT INTO users (email, password, role) VALUES (@email, @pass, 'pasien'); SELECT SCOPE_IDENTITY();";
-                    object result = DBHelper.ExecuteScalar(qUser, new SqlParameter[]
+                    using (SqlConnection conn =
+                        DBHelper.GetConnection())
                     {
-                        new SqlParameter("@email", txtEmail.Text.Trim()),
-                        new SqlParameter("@pass",  txtPassword.Text.Trim())
-                    });
-                    userId = Convert.ToInt32(result);
+                        conn.Open();
+
+                        using (SqlCommand cmd =
+                            new SqlCommand(
+                                "sp_InsertUser",
+                                conn))
+                        {
+                            cmd.CommandType =
+                                CommandType.StoredProcedure;
+
+                            cmd.Parameters.AddWithValue(
+                                "@email",
+                                txtEmail.Text.Trim());
+
+                            cmd.Parameters.AddWithValue(
+                                "@password",
+                                txtPassword.Text.Trim());
+
+                            object result =
+                                cmd.ExecuteScalar();
+
+                            userId =
+                                Convert.ToInt32(result);
+                        }
+                    }
                 }
 
-                string jk = rbLaki.Checked ? "L" : "P";
-                string qPasien = @"INSERT INTO pasien (user_id, nik, nama_lengkap, tanggal_lahir, jenis_kelamin, alamat, no_hp)
-                                   VALUES (@uid, @nik, @nama, @tgl, @jk, @alamat, @hp)";
-                DBHelper.ExecuteNonQuery(qPasien, new SqlParameter[]
-                {
-                    new SqlParameter("@uid",    userId),
-                    new SqlParameter("@nik",    txtNIK.Text.Trim()),
-                    new SqlParameter("@nama",   txtNama.Text.Trim()),
-                    new SqlParameter("@tgl",    dtTanggalLahir.Value.Date),
-                    new SqlParameter("@jk",     jk),
-                    new SqlParameter("@alamat", txtAlamat.Text.Trim()),
-                    new SqlParameter("@hp",     txtNoHP.Text.Trim())
-                });
+                string jk =
+                    rbLaki.Checked ? "L" : "P";
 
-                MessageBox.Show("Registrasi berhasil! Silakan login.", "Sukses",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            "sp_InsertPasien",
+                            conn))
+                    {
+                        cmd.CommandType =
+                            CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue(
+                            "@uid",
+                            userId);
+
+                        cmd.Parameters.AddWithValue(
+                            "@nik",
+                            txtNIK.Text.Trim());
+
+                        cmd.Parameters.AddWithValue(
+                            "@nama",
+                            txtNama.Text.Trim());
+
+                        cmd.Parameters.AddWithValue(
+                            "@tgl",
+                            dtTanggalLahir.Value.Date);
+
+                        cmd.Parameters.AddWithValue(
+                            "@jk",
+                            jk);
+
+                        cmd.Parameters.AddWithValue(
+                            "@alamat",
+                            txtAlamat.Text.Trim());
+
+                        cmd.Parameters.AddWithValue(
+                            "@hp",
+                            txtNoHP.Text.Trim());
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show(
+                    "Registrasi berhasil! Silakan login.",
+                    "Sukses",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
                 this.Hide();
+
                 new FormLogin().Show();
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show("Gagal mendaftar: " + ex.Message, "Error",
