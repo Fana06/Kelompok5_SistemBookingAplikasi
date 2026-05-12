@@ -892,6 +892,60 @@ private void LoadDokterCombo()
             }
         }
 
+        private void RunSqlInjectionDemo()
+        {
+            try
+            {
+                string query =
+                    "SELECT " +
+                    "booking_id, " +
+                    "'HACKED' AS nama_lengkap, " +
+                    "'HACKED' AS nik, " +
+                    "'HACKED' AS nama_dokter, " +
+                    "'HACKED' AS hari, " +
+                    "'10:00' AS jam_mulai, " +
+                    "'2025-01-01' AS tanggal_booking, " +
+                    "'DATABASE HACKED' AS keluhan, " +
+                    "'HACKED' AS status_booking " +
+                    "FROM booking_detail";
+
+                DataTable dt = new DataTable();
+
+                using (SqlConnection conn =
+                    DBHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd =
+                        new SqlCommand(query, conn))
+                    {
+                        using (SqlDataAdapter da =
+                            new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
+
+                bsBooking.DataSource = dt;
+
+                dgvBooking.DataSource =
+                    bsBooking;
+
+                MessageBox.Show(
+                    "SQL Injection berhasil dijalankan.",
+                    "Info",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "SQL Injection gagal: "
+                    + ex.Message);
+            }
+        }
+
         private void BtnLogout_Click(
             object sender,
             EventArgs e)
@@ -959,6 +1013,22 @@ private void LoadDokterCombo()
         {
             LoadDokter(
                 txtCariDokter.Text.Trim());
+        }
+
+        private void BtnInject_Click(object sender, EventArgs e)
+        {
+            RunSqlInjectionDemo();
+        }
+
+        private void BtnResetInject_Click(object sender, EventArgs e)
+        {
+            LoadBooking();
+
+            MessageBox.Show(
+                "Data berhasil dikembalikan.",
+                "Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
     }
 }
