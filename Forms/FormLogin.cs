@@ -14,15 +14,21 @@ namespace BookingKontrolPasien.Forms
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+private void btnLogin_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) ||
+                string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Email dan password tidak boleh kosong!", "Peringatan",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+
+                    "Email dan password tidak boleh kosong!",
+                    "Peringatan",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
                 return;
             }
 
@@ -59,44 +65,98 @@ namespace BookingKontrolPasien.Forms
 
             if (dt.Rows.Count > 0)
             {
-                Session.UserId = Convert.ToInt32(dt.Rows[0]["id"]);
-                Session.Email  = dt.Rows[0]["email"].ToString();
-                Session.Role   = dt.Rows[0]["role"].ToString();
+                Session.UserId =
+                    Convert.ToInt32(
+                        dt.Rows[0]["id"]);
+
+                Session.Email =
+                    dt.Rows[0]["email"]
+                    .ToString();
+
+                Session.Role =
+                    dt.Rows[0]["role"]
+                    .ToString();
 
                 if (Session.Role == "admin")
                 {
-                    Session.NamaLengkap = "Administrator";
+                    Session.NamaLengkap =
+                        "Administrator";
+
                     this.Hide();
-                    new FormDashboardAdmin().Show();
+
+                    new FormDashboardAdmin()
+                        .Show();
                 }
                 else
                 {
-                    string qPasien = "SELECT id, nama_lengkap FROM pasien WHERE user_id=@uid";
-                    DataTable dtPasien = DBHelper.ExecuteQuery(qPasien,
-                        new[] { new SqlParameter("@uid", Session.UserId) });
+                    DataTable dtPasien =
+                        new DataTable();
+
+                    using (SqlConnection conn =
+                        DBHelper.GetConnection())
+                    {
+                        conn.Open();
+
+                        using (SqlCommand cmd =
+                            new SqlCommand(
+                                "sp_GetPasienByUserId",
+                                conn))
+                        {
+                            cmd.CommandType =
+                                CommandType.StoredProcedure;
+
+                            cmd.Parameters.AddWithValue(
+                                "@uid",
+                                Session.UserId);
+
+                            using (SqlDataAdapter da =
+                                new SqlDataAdapter(cmd))
+                            {
+                                da.Fill(dtPasien);
+                            }
+                        }
+                    }
 
                     if (dtPasien.Rows.Count > 0)
                     {
-                        Session.PasienId    = Convert.ToInt32(dtPasien.Rows[0]["id"]);
-                        Session.NamaLengkap = dtPasien.Rows[0]["nama_lengkap"].ToString();
+                        Session.PasienId =
+                            Convert.ToInt32(
+                                dtPasien.Rows[0]["id"]);
+
+                        Session.NamaLengkap =
+                            dtPasien.Rows[0]["nama_lengkap"]
+                            .ToString();
+
                         this.Hide();
-                        new FormDashboardPasien().Show();
+
+                        new FormDashboardPasien()
+                            .Show();
                     }
                     else
                     {
-                        MessageBox.Show("Silakan lengkapi data diri terlebih dahulu.", "Info",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            "Silakan lengkapi data diri terlebih dahulu.",
+                            "Info",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+
                         this.Hide();
-                        new FormRegister(Session.UserId).Show();
+
+                        new FormRegister(
+                            Session.UserId)
+                            .Show();
                     }
                 }
             }
             else
             {
-                lblError.Text    = "Email atau password salah!";
+                lblError.Text =
+                    "Email atau password salah!";
+
                 lblError.Visible = true;
             }
         }
+
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
