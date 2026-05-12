@@ -15,8 +15,8 @@ namespace BookingKontrolPasien.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDashboardPasien));
             this.panelTop = new System.Windows.Forms.Panel();
             this.lblAppTitle = new System.Windows.Forms.Label();
@@ -84,7 +84,6 @@ namespace BookingKontrolPasien.Forms
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.panelTop.Controls.Add(this.bindingNavigator1);
             this.panelTop.Controls.Add(this.lblAppTitle);
             this.panelTop.Controls.Add(this.lblWelcome);
             this.panelTop.Controls.Add(this.btnLogout);
@@ -98,16 +97,16 @@ namespace BookingKontrolPasien.Forms
             // 
             this.lblAppTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblAppTitle.ForeColor = System.Drawing.Color.White;
-            this.lblAppTitle.Location = new System.Drawing.Point(20, 28);
+            this.lblAppTitle.Location = new System.Drawing.Point(20, 20);
             this.lblAppTitle.Name = "lblAppTitle";
-            this.lblAppTitle.Size = new System.Drawing.Size(181, 30);
+            this.lblAppTitle.Size = new System.Drawing.Size(181, 35);
             this.lblAppTitle.TabIndex = 0;
             this.lblAppTitle.Text = "🏥 Portal Pasien";
             // 
             // lblWelcome
             // 
             this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(240)))), ((int)(((byte)(200)))));
-            this.lblWelcome.Location = new System.Drawing.Point(264, 33);
+            this.lblWelcome.Location = new System.Drawing.Point(272, 20);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(420, 22);
             this.lblWelcome.TabIndex = 1;
@@ -120,9 +119,9 @@ namespace BookingKontrolPasien.Forms
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(873, 31);
+            this.btnLogout.Location = new System.Drawing.Point(857, 17);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(99, 24);
+            this.btnLogout.Size = new System.Drawing.Size(105, 36);
             this.btnLogout.TabIndex = 2;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = false;
@@ -155,6 +154,7 @@ namespace BookingKontrolPasien.Forms
             // panelRiwayatBar
             // 
             this.panelRiwayatBar.BackColor = System.Drawing.Color.Transparent;
+            this.panelRiwayatBar.Controls.Add(this.bindingNavigator1);
             this.panelRiwayatBar.Controls.Add(this.lblCariRiwayat);
             this.panelRiwayatBar.Controls.Add(this.txtCariRiwayat);
             this.panelRiwayatBar.Controls.Add(this.btnBatalBooking);
@@ -202,14 +202,14 @@ namespace BookingKontrolPasien.Forms
             this.dgvRiwayat.AllowUserToAddRows = false;
             this.dgvRiwayat.BackgroundColor = System.Drawing.Color.White;
             this.dgvRiwayat.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvRiwayat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvRiwayat.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvRiwayat.ColumnHeadersHeight = 36;
             this.dgvRiwayat.EnableHeadersVisualStyles = false;
             this.dgvRiwayat.Location = new System.Drawing.Point(8, 47);
@@ -252,14 +252,14 @@ namespace BookingKontrolPasien.Forms
             this.dgvJadwal.AllowUserToAddRows = false;
             this.dgvJadwal.BackgroundColor = System.Drawing.Color.White;
             this.dgvJadwal.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvJadwal.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvJadwal.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvJadwal.ColumnHeadersHeight = 36;
             this.dgvJadwal.EnableHeadersVisualStyles = false;
             this.dgvJadwal.Location = new System.Drawing.Point(10, 44);
@@ -461,6 +461,7 @@ namespace BookingKontrolPasien.Forms
             this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
             this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
             this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.None;
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
@@ -473,14 +474,14 @@ namespace BookingKontrolPasien.Forms
             this.bindingNavigatorSeparator2,
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem});
-            this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
+            this.bindingNavigator1.Location = new System.Drawing.Point(355, 9);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(984, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(286, 25);
             this.bindingNavigator1.TabIndex = 3;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -583,7 +584,6 @@ namespace BookingKontrolPasien.Forms
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDashboardPasien_FormClosed);
             this.Load += new System.EventHandler(this.FormDashboardPasien_Load);
             this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.tabRiwayat.ResumeLayout(false);
             this.panelRiwayatBar.ResumeLayout(false);

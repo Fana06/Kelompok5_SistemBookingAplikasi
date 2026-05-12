@@ -11,9 +11,26 @@ namespace BookingKontrolPasien.Forms
 {
     public partial class FormDashboardAdmin : Form
     {
+        private readonly BindingSource bsBooking =
+    new BindingSource();
+
+        private readonly BindingSource bsDokter =
+    new BindingSource();
+
+        private readonly BindingSource bsJadwal =
+            new BindingSource();
         public FormDashboardAdmin()
         {
             InitializeComponent();
+
+            bindingNavigator1.BindingSource =
+            bsBooking;
+
+            bindingNavigator2.BindingSource =
+             bsDokter;
+
+            bindingNavigator3.BindingSource =
+              bsJadwal;
 
             SetupCard(
                 this.cardPasien,
@@ -153,7 +170,10 @@ private void LoadBooking(string filter = "")
                     }
                 }
 
-                dgvBooking.DataSource = dt;
+                bsBooking.DataSource = dt;
+
+                dgvBooking.DataSource =
+                    bsBooking;
 
                 FormatGridBooking();
             }
@@ -199,7 +219,12 @@ private void LoadDokter(string keyword = "")
 
                 dgvDokter.Columns.Clear();
 
-                dgvDokter.DataSource = dt;
+            
+                bsDokter.DataSource = dt;
+
+                dgvDokter.DataSource =
+                    bsDokter;
+
 
                 dgvDokter.BringToFront();
 
@@ -251,7 +276,13 @@ private void LoadJadwal()
                     }
                 }
 
-                dgvJadwal.DataSource = dt;
+              
+                bsJadwal.DataSource = dt;
+
+                dgvJadwal.DataSource =
+                    bsJadwal;
+
+
 
                 dgvJadwal.AutoSizeColumnsMode =
                     DataGridViewAutoSizeColumnsMode.Fill;
@@ -847,9 +878,13 @@ private void LoadDokterCombo()
                     }
                 }
 
-                dgvJadwal.DataSource = dt;
+                
+                bsJadwal.DataSource = dt;
 
-                dgvJadwal.DataSource = dt;
+                dgvJadwal.DataSource =
+                    bsJadwal;
+
+
             }
             catch
             {
