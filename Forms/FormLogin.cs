@@ -14,7 +14,7 @@ namespace BookingKontrolPasien.Forms
             InitializeComponent();
         }
 
-private void btnLogin_Click(object sender, EventArgs e)
+private void BtnLogin_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
@@ -158,15 +158,15 @@ private void btnLogin_Click(object sender, EventArgs e)
         }
 
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        private void BtnRegister_Click(object sender, EventArgs e)
         {
             this.Hide();
             new FormRegister().Show();
         }
 
-        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        private void TxtPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) btnLogin_Click(sender, e);
+            if (e.KeyCode == Keys.Enter) BtnLogin_Click(sender, e);
         }
 
         private void FormLogin_FormClosed(object sender, FormClosedEventArgs e)
@@ -174,12 +174,12 @@ private void btnLogin_Click(object sender, EventArgs e)
             Application.Exit();
         }
 
-        private void lblAppName_Click(object sender, EventArgs e)
+        private void LblAppName_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void panelLeft_Paint(object sender, PaintEventArgs e)
+        private void PanelLeft_Paint(object sender, PaintEventArgs e)
         {
 
         }

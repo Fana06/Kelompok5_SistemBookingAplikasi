@@ -415,17 +415,17 @@ private void LoadDokterCombo()
             card.Controls.Add(lblValue);
         }
 
-        private void btnSetujui_Click(object sender, EventArgs e)
+        private void BtnSetujui_Click(object sender, EventArgs e)
         {
             UpdateBookingStatus("disetujui");
         }
 
-        private void btnTolak_Click(object sender, EventArgs e)
+        private void BtnTolak_Click(object sender, EventArgs e)
         {
             UpdateBookingStatus("ditolak");
         }
 
-        private void btnSelesai_Click(object sender, EventArgs e)
+        private void BtnSelesai_Click(object sender, EventArgs e)
         {
             UpdateBookingStatus("selesai");
         }
@@ -489,7 +489,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void cmbFilter_SelectedIndexChanged(
+        private void CmbFilter_SelectedIndexChanged(
             object sender,
             EventArgs e)
         {
@@ -500,7 +500,7 @@ private void LoadDokterCombo()
                 val == "Semua" ? "" : val);
         }
 
-        private void btnTambahDokter_Click(
+        private void BtnTambahDokter_Click(
             object sender,
             EventArgs e)
         {
@@ -573,7 +573,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void btnNonaktifDokter_Click(
+        private void BtnNonaktifDokter_Click    (
             object sender,
             EventArgs e)
         {
@@ -623,7 +623,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void btnTambahJadwal_Click(
+        private void BtnTambahJadwal_Click(
             object sender,
             EventArgs e)
         {
@@ -702,7 +702,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void btnHapusJadwal_Click(
+        private void BtnHapusJadwal_Click(
     object sender,
     EventArgs e)
         {
@@ -762,7 +762,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void tabControl_SelectedIndexChanged(
+        private void TabControl_SelectedIndexChanged(
             object sender,
             EventArgs e)
         {
@@ -804,7 +804,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void cmbDokterJadwal_SelectedIndexChanged(
+        private void CmbDokterJadwal_SelectedIndexChanged(
             object sender,
             EventArgs e)
         {
@@ -857,7 +857,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void btnLogout_Click(
+        private void BtnLogout_Click(
             object sender,
             EventArgs e)
         {
@@ -875,7 +875,7 @@ private void LoadDokterCombo()
             Application.Exit();
         }
 
-        private void panelCards_Paint(
+        private void PanelCards_Paint(
             object sender,
             PaintEventArgs e)
         {
@@ -893,7 +893,7 @@ private void LoadDokterCombo()
             }
         }
 
-        private void panelFormJadwal_Paint(
+        private void PanelFormJadwal_Paint(
             object sender,
             PaintEventArgs e)
         {
@@ -911,14 +911,14 @@ private void LoadDokterCombo()
             }
         }
 
-        private void tabDokter_Click(
+        private void TabDokter_Click(
             object sender,
             EventArgs e)
         {
             LoadDokter();
         }
 
-        private void txtCariDokter_TextChanged(
+        private void TxtCariDokter_TextChanged(
     object sender,
     EventArgs e)
         {

@@ -170,7 +170,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void btnBooking_Click(object sender, EventArgs e)
+        private void BtnBooking_Click(object sender, EventArgs e)
         {
             if (dgvJadwal.SelectedRows.Count == 0)
             {
@@ -281,7 +281,7 @@ namespace BookingKontrolPasien.Forms
             tabControl.SelectedIndex = 0;
         }
 
-        private void btnBatalBooking_Click(object sender, EventArgs e)
+        private void BtnBatalBooking_Click(object sender, EventArgs e)
         {
             if (dgvRiwayat.SelectedRows.Count == 0)
             {
@@ -357,7 +357,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void txtCariRiwayat_TextChanged(
+        private void TxtCariRiwayat_TextChanged(
             object sender,
             EventArgs e)
         {
@@ -459,7 +459,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void tabControl_SelectedIndexChanged(
+        private void TabControl_SelectedIndexChanged(
             object sender,
             EventArgs e)
         {
@@ -479,7 +479,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             Session.Clear();
 

@@ -8,7 +8,7 @@ namespace BookingKontrolPasien.Forms
 {
     public partial class FormRegister : Form
     {
-        private int _existingUserId = 0;
+        private readonly int _existingUserId = 0;
 
         public FormRegister(int existingUserId = 0)
         {
@@ -23,7 +23,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void btnDaftar_Click(object sender, EventArgs e)
+        private void BtnDaftar_Click(object sender, EventArgs e)
         {
             if (_existingUserId == 0)
             {
@@ -157,7 +157,7 @@ namespace BookingKontrolPasien.Forms
             }
         }
 
-        private void btnBatal_Click(object sender, EventArgs e)
+        private void BtnBatal_Click(object sender, EventArgs e)
         {
             this.Hide();
             new FormLogin().Show();
