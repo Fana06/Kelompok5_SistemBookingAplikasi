@@ -106,7 +106,10 @@ namespace BookingKontrolPasien.Forms
                 }
             }
 
-            dgvJadwal.DataSource = dt;
+            bsJadwal.DataSource = dt;
+
+            dgvJadwal.DataSource =
+                bsJadwal;
 
             dgvJadwal.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
