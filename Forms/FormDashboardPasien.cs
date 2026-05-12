@@ -72,7 +72,10 @@ namespace BookingKontrolPasien.Forms
                 }
             }
 
-            dgvRiwayat.DataSource = dt;
+            bsRiwayat.DataSource = dt;
+
+            dgvRiwayat.DataSource =
+                bsRiwayat;
 
             FormatGridStatus(
                 dgvRiwayat,
