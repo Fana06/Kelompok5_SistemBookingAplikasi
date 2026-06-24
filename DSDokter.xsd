@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSDokter" targetNamespace="http://tempuri.org/DSDokter.xsd" xmlns:mstns="http://tempuri.org/DSDokter.xsd" xmlns="http://tempuri.org/DSDokter.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSDokter" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DSDokter" msprop:Generator_DataSetName="DSDokter">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Dokter" msprop:Generator_RowEvHandlerName="DokterRowChangeEventHandler" msprop:Generator_RowDeletedName="DokterRowDeleted" msprop:Generator_RowDeletingName="DokterRowDeleting" msprop:Generator_RowEvArgName="DokterRowChangeEvent" msprop:Generator_TablePropName="Dokter" msprop:Generator_RowChangedName="DokterRowChanged" msprop:Generator_RowChangingName="DokterRowChanging" msprop:Generator_TableClassName="DokterDataTable" msprop:Generator_RowClassName="DokterRow" msprop:Generator_TableVarName="tableDokter" msprop:Generator_UserTableName="Dokter">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_UserColumnName="id" type="xs:string" minOccurs="0" />
+              <xs:element name="nama_dokter" msprop:Generator_ColumnPropNameInRow="nama_dokter" msprop:Generator_ColumnPropNameInTable="nama_dokterColumn" msprop:Generator_ColumnVarNameInTable="columnnama_dokter" msprop:Generator_UserColumnName="nama_dokter" type="xs:string" minOccurs="0" />
+              <xs:element name="spesialisasi" msprop:Generator_ColumnPropNameInRow="spesialisasi" msprop:Generator_ColumnPropNameInTable="spesialisasiColumn" msprop:Generator_ColumnVarNameInTable="columnspesialisasi" msprop:Generator_UserColumnName="spesialisasi" type="xs:string" minOccurs="0" />
+              <xs:element name="no_hp" msprop:Generator_ColumnPropNameInRow="no_hp" msprop:Generator_ColumnPropNameInTable="no_hpColumn" msprop:Generator_ColumnVarNameInTable="columnno_hp" msprop:Generator_UserColumnName="no_hp" type="xs:string" minOccurs="0" />
+              <xs:element name="status_aktif" msprop:Generator_ColumnPropNameInRow="status_aktif" msprop:Generator_ColumnPropNameInTable="status_aktifColumn" msprop:Generator_ColumnVarNameInTable="columnstatus_aktif" msprop:Generator_UserColumnName="status_aktif" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
