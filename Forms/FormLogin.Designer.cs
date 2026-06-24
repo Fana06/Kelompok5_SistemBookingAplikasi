@@ -18,7 +18,6 @@ namespace BookingKontrolPasien.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.lblSubtitle = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelRight = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblEmailLbl = new System.Windows.Forms.Label();
@@ -32,7 +31,6 @@ namespace BookingKontrolPasien.Forms
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelRight.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +48,6 @@ namespace BookingKontrolPasien.Forms
             // 
             this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.panelLeft.Controls.Add(this.lblSubtitle);
-            this.panelLeft.Controls.Add(this.pictureBox1);
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(320, 500);
@@ -61,24 +58,12 @@ namespace BookingKontrolPasien.Forms
             // 
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(22, 272);
+            this.lblSubtitle.Location = new System.Drawing.Point(23, 200);
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Size = new System.Drawing.Size(275, 60);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Semoga Diberikan Kesembuhan, Aamiin... YRA";
             this.lblSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Image = global::BookingKontrolPasien.Properties.Resources.Sistem_Booking_Kontrol_Pasien_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(36, 89);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(251, 228);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // panelRight
             // 
@@ -221,7 +206,6 @@ namespace BookingKontrolPasien.Forms
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLogin_FormClosed);
             this.panelMain.ResumeLayout(false);
             this.panelLeft.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelRight.ResumeLayout(false);
             this.panelRight.PerformLayout();
             this.ResumeLayout(false);
@@ -243,7 +227,6 @@ namespace BookingKontrolPasien.Forms
         private System.Windows.Forms.Button     btnLogin;
         private System.Windows.Forms.Label      lblOr;
         private System.Windows.Forms.Button     btnRegister;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
