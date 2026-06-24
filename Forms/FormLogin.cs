@@ -14,7 +14,7 @@ namespace BookingKontrolPasien.Forms
             InitializeComponent();
         }
 
-private void BtnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();

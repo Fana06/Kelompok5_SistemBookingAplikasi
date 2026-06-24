@@ -18,6 +18,7 @@ namespace BookingKontrolPasien.Forms
         public FormDashboardPasien()
         {
             InitializeComponent();
+            BindingNavigatorIconHelper.ApplyTo(this);
 
             bindingNavigator1.BindingSource =
             bsRiwayat;

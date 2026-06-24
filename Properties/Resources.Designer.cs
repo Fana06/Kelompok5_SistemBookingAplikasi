@@ -59,5 +59,15 @@ namespace BookingKontrolPasien.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sistem_Booking_Kontrol_Pasien_logo {
+            get {
+                object obj = ResourceManager.GetObject("Sistem Booking Kontrol Pasien logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
