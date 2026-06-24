@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,8 +7,9 @@ namespace BookingKontrolPasien.Helpers
 {
     public static class DBHelper
     {
-        private static string connectionString =
-            "Server=LAPTOP-UTG5TDLC\\FANA;Database=DBKontrolPasien;Trusted_Connection=True;";
+        private static readonly string connectionString =
+            ConfigurationManager.ConnectionStrings["DBKontrolPasien"]?.ConnectionString
+            ?? "Server=LAPTOP-UTG5TDLC\\FANA;Database=DBKontrolPasien;Trusted_Connection=True;";
 
         public static SqlConnection GetConnection()
         {

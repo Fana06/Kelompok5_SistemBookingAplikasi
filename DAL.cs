@@ -15,7 +15,7 @@ namespace BookingKontrolPasien.Helpers
         public DataTable LoadReportBooking(
             DateTime tanggalMulai,
             DateTime tanggalSelesai,
-            string status) 
+            string status)
         {
             SqlParameter[] parameters =
             {

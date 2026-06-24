@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -15,6 +16,30 @@ namespace BookingKontrolPasien.Forms
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Login();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(
+                    "Gagal terhubung ke database: " + ex.Message,
+                    "Database",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Gagal login: " + ex.Message,
+                    "Login",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void Login()
         {
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
@@ -79,6 +104,19 @@ namespace BookingKontrolPasien.Forms
 
                 if (Session.Role == "admin")
                 {
+                    if (!IsAdminLoginAllowed())
+                    {
+                        Session.Clear();
+
+                        MessageBox.Show(
+                            "Login admin tidak diizinkan di aplikasi client.",
+                            "Akses Ditolak",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return;
+                    }
+
                     Session.NamaLengkap =
                         "Administrator";
 
@@ -150,8 +188,7 @@ namespace BookingKontrolPasien.Forms
             }
             else
             {
-                lblError.Text =
-                    "Email atau password salah!";
+                lblError.Text = "Email atau password salah!";
 
                 lblError.Visible = true;
             }
@@ -162,6 +199,17 @@ namespace BookingKontrolPasien.Forms
         {
             this.Hide();
             new FormRegister().Show();
+        }
+
+        private static bool IsAdminLoginAllowed()
+        {
+            string value =
+                ConfigurationManager.AppSettings["AllowAdminLogin"];
+
+            return string.Equals(
+                value,
+                "true",
+                StringComparison.OrdinalIgnoreCase);
         }
 
         private void TxtPassword_KeyDown(object sender, KeyEventArgs e)
@@ -180,6 +228,11 @@ namespace BookingKontrolPasien.Forms
         }
 
         private void PanelLeft_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

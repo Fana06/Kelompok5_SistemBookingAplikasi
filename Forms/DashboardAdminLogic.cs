@@ -605,7 +605,18 @@ namespace BookingKontrolPasien.Forms
         private string FindDokterPhoto(int dokterId)
         {
             string photosDirectory = GetDokterPhotosDirectory();
+            string legacyPhotosDirectory = GetLegacyDokterPhotosDirectory();
 
+            string photoPath = FindDokterPhotoInDirectory(photosDirectory, dokterId);
+
+            if (!string.IsNullOrEmpty(photoPath))
+                return photoPath;
+
+            return FindDokterPhotoInDirectory(legacyPhotosDirectory, dokterId);
+        }
+
+        private string FindDokterPhotoInDirectory(string photosDirectory, int dokterId)
+        {
             if (!Directory.Exists(photosDirectory))
                 return string.Empty;
 
@@ -623,6 +634,14 @@ namespace BookingKontrolPasien.Forms
         }
 
         private string GetDokterPhotosDirectory()
+        {
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "BookingKontrolPasien",
+                "DokterPhotos");
+        }
+
+        private string GetLegacyDokterPhotosDirectory()
         {
             return Path.Combine(Application.StartupPath, "DokterPhotos");
         }
