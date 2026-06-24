@@ -1,1034 +1,273 @@
 using BookingKontrolPasien.Helpers;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace BookingKontrolPasien.Forms
 {
     public partial class FormDashboardAdmin : Form
     {
-        private readonly BindingSource bsBooking =
-    new BindingSource();
+        internal readonly BindingSource bsBooking = new BindingSource();
+        internal readonly BindingSource bsDokter = new BindingSource();
+        internal readonly BindingSource bsJadwal = new BindingSource();
+        internal readonly DAL _dal = new DAL();
+        internal DataTable _importDokterTable;
+        internal DataTable _importJadwalTable;
+        internal DataTable _reportTable;
+        internal int _reportPrintRowIndex;
 
-        private readonly BindingSource bsDokter =
-    new BindingSource();
+        private readonly DashboardAdminLogic _logic;
 
-        private readonly BindingSource bsJadwal =
-            new BindingSource();
+        private bool IsInDesigner =>
+            DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
+        private bool CanRunLogic =>
+            !IsInDesigner && _logic != null;
+
         public FormDashboardAdmin()
         {
             InitializeComponent();
+            RestoreTabContentLayout();
+            ApplyResponsiveLayout();
+            UpdateDashboardLayout();
+            BindingNavigatorIconHelper.ApplyTo(this);
+            _logic = new DashboardAdminLogic(this);
 
-            bindingNavigator1.BindingSource =
-            bsBooking;
+            bindingNavigator1.BindingSource = bsBooking;
+            bindingNavigator2.BindingSource = bsDokter;
+            bindingNavigator3.BindingSource = bsJadwal;
 
-            bindingNavigator2.BindingSource =
-             bsDokter;
+            if (IsInDesigner)
+                return;
 
-            bindingNavigator3.BindingSource =
-              bsJadwal;
-
-            SetupCard(
-                this.cardPasien,
-                this.lblCardPasien,
-                "Total Pasien",
-                this.lblTotalPasien,
-                new Point(20, 20),
-                Color.FromArgb(41, 128, 185));
-
-            SetupCard(
-                this.cardDokter,
-                this.lblCardDokter,
-                "Dokter Aktif",
-                this.lblTotalDokter,
-                new Point(220, 20),
-                Color.FromArgb(39, 174, 96));
-
-            SetupCard(
-                this.cardMenunggu,
-                this.lblCardMenunggu,
-                "Booking Menunggu",
-                this.lblMenunggu,
-                new Point(420, 20),
-                Color.FromArgb(230, 126, 34)); 
+            _logic.SetupCard(cardPasien, lblCardPasien, "Total Pasien", lblTotalPasien, new Point(20, 20), Color.FromArgb(41, 128, 185));
+            _logic.SetupCard(cardDokter, lblCardDokter, "Dokter Aktif", lblTotalDokter, new Point(220, 20), Color.FromArgb(39, 174, 96));
+            _logic.SetupCard(cardMenunggu, lblCardMenunggu, "Booking Menunggu", lblMenunggu, new Point(420, 20), Color.FromArgb(230, 126, 34));
         }
 
-
-    private void FormDashboardAdmin_Load(object sender, EventArgs e)
+        private void ApplyResponsiveLayout()
         {
+            MinimumSize = new Size(980, 600);
+
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnInject.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnResetInject.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            tabSummary.AutoScroll = true;
+            tabBooking.AutoScroll = true;
+            tabDokter.AutoScroll = true;
+            tabJadwal.AutoScroll = true;
+            tabReport.AutoScroll = true;
+            tabImport.AutoScroll = true;
+            tabImportJadwal.AutoScroll = true;
+
+            panelCards.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _chartBookingStatus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelFilterBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            bindingNavigator1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dgvBooking.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelFormDokter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            bindingNavigator2.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnTambahDokter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNonaktifDokter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbFotoDokter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dgvDokter.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            panelFormJadwal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            bindingNavigator3.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnTambahJadwal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnHapusJadwal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dgvJadwal.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            _dgvReportBooking.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            _lblImportStatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _dgvImportDokter.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            _lblImportJadwalStatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _dgvImportJadwal.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            Resize += FormDashboardAdmin_Resize;
+            tabControl.Resize += TabControl_Resize;
+        }
+
+        private void FormDashboardAdmin_Resize(object sender, EventArgs e)
+        {
+            UpdateDashboardLayout();
+        }
+
+        private void TabControl_Resize(object sender, EventArgs e)
+        {
+            UpdateDashboardLayout();
+        }
+
+        private void UpdateDashboardLayout()
+        {
+            ResizeGridBelowPanel(tabBooking, panelFilterBar, dgvBooking, 8);
+            ResizeGridBelowPanel(tabDokter, panelFormDokter, dgvDokter, 8);
+            ResizeGridBelowPanel(tabJadwal, panelFormJadwal, dgvJadwal, 8);
+            ResizeGridBelowPanel(tabReport, panelReportFilter, _dgvReportBooking, 8);
+            ResizeGridBelowPanel(tabImport, panelImport, _dgvImportDokter, 8);
+            ResizeGridBelowPanel(tabImportJadwal, panelImportJadwal, _dgvImportJadwal, 8);
+        }
+
+        private static void ResizeGridBelowPanel(
+            Control page,
+            Control topPanel,
+            DataGridView grid,
+            int gap)
+        {
+            if (page == null || topPanel == null || grid == null)
+                return;
+
+            int margin = 10;
+            int top = Math.Max(topPanel.Bottom + gap, margin);
+            int width = Math.Max(page.ClientSize.Width - (margin * 2), 100);
+            int height = Math.Max(page.ClientSize.Height - top - margin, 120);
+
+            grid.SetBounds(margin, top, width, height);
+            grid.ScrollBars = ScrollBars.Both;
+            grid.ColumnHeadersVisible = true;
+        }
+
+        private void RestoreTabContentLayout()
+        {
+            EnsureChild(tabSummary, panelCards);
+            EnsureChild(tabSummary, lblChartBookingTitle);
+            EnsureChild(tabSummary, _chartBookingStatus);
+
+            EnsureChild(tabBooking, panelFilterBar);
+            EnsureChild(tabBooking, dgvBooking);
+
+            EnsureChild(tabDokter, panelFormDokter);
+            EnsureChild(tabDokter, dgvDokter);
+
+            EnsureChild(tabJadwal, panelFormJadwal);
+            EnsureChild(tabJadwal, dgvJadwal);
+
+            EnsureChild(tabReport, _dgvReportBooking);
+            EnsureChild(tabReport, panelReportFilter);
+
+            EnsureChild(tabImport, _dgvImportDokter);
+            EnsureChild(tabImport, panelImport);
+            EnsureChild(tabImportJadwal, _dgvImportJadwal);
+            EnsureChild(tabImportJadwal, panelImportJadwal);
+
+            panelCards.Visible = true;
+            panelFilterBar.Visible = true;
+            panelFormDokter.Visible = true;
+            panelFormJadwal.Visible = true;
+            panelReportFilter.Visible = true;
+            panelImport.Visible = true;
+            if (panelImportJadwal != null) panelImportJadwal.Visible = true;
+
+            dgvBooking.Visible = true;
+            dgvDokter.Visible = true;
+            dgvJadwal.Visible = true;
+            _dgvReportBooking.Visible = true;
+            _dgvImportDokter.Visible = true;
+            if (_dgvImportJadwal != null) _dgvImportJadwal.Visible = true;
+
+            panelCards.BringToFront();
+            panelFilterBar.BringToFront();
+            panelFormDokter.BringToFront();
+            panelFormJadwal.BringToFront();
+            panelReportFilter.BringToFront();
+            panelImport.BringToFront();
+            panelImportJadwal?.BringToFront();
+        }
+
+        private static void EnsureChild(Control parent, Control child)
+        {
+            if (parent == null || child == null)
+                return;
+
+            if (child.Parent != parent)
+            {
+                child.Parent?.Controls.Remove(child);
+                parent.Controls.Add(child);
+            }
+        }
+
+        private void FormDashboardAdmin_Load(object sender, EventArgs e)
+        {
+            if (IsInDesigner)
+                return;
+
             lblWelcome.Text = "Selamat datang, Administrator";
 
-            UpdateExpiredBookings();
-
+            _logic.UpdateExpiredBookings();
             cmbFilter.SelectedIndex = 0;
+            _dtpReportMulai.Value = DateTime.Today.AddMonths(-1);
+            _dtpReportSelesai.Value = DateTime.Today;
+            _cmbReportStatus.SelectedIndex = 0;
 
-            LoadSummary();
-
-            LoadDokterCombo();
-
-            LoadBooking();
-
-            LoadDokter();
-
-            LoadJadwal();
+            _logic.LoadSummary();
+            _logic.LoadDokterCombo();
+            _logic.LoadBooking();
+            _logic.LoadDokter();
+            _logic.LoadJadwal();
 
             dgvBooking.BringToFront();
             dgvDokter.BringToFront();
             dgvJadwal.BringToFront();
         }
 
-        private void UpdateExpiredBookings()
+        protected override void OnLoad(EventArgs e)
         {
-            using (SqlConnection conn =
-                DBHelper.GetConnection())
-            {
-                conn.Open();
+            base.OnLoad(e);
 
-                using (SqlCommand cmd =
-                    new SqlCommand(
-                        "sp_UpdateExpiredBookings",
-                        conn))
-                {
-                    cmd.CommandType =
-                        CommandType.StoredProcedure;
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        private void LoadSummary()
-        {
-            DataTable dt = new DataTable();
-
-            using (SqlConnection conn =
-                DBHelper.GetConnection())
-            {
-                conn.Open();
-
-                using (SqlCommand cmd =
-                    new SqlCommand(
-                        "sp_LoadSummary",
-                        conn))
-                {
-                    cmd.CommandType =
-                        CommandType.StoredProcedure;
-
-                    using (SqlDataAdapter da =
-                        new SqlDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
-                }
-            }
-
-            if (dt.Rows.Count > 0)
-            {
-                lblTotalPasien.Text =
-                    dt.Rows[0]["total_pasien"].ToString();
-
-                lblTotalDokter.Text =
-                    dt.Rows[0]["total_dokter"].ToString();
-
-                lblMenunggu.Text =
-                    dt.Rows[0]["total_booking"].ToString();
-            }
-        }
-
-private void LoadBooking(string filter = "")
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_LoadBooking",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@filter",
-                            filter);
-
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-                bsBooking.DataSource = dt;
-
-                dgvBooking.DataSource =
-                    bsBooking;
-
-                FormatGridBooking();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal memuat booking: "
-                    + ex.Message);
-            }
-        }
-
-
-private void LoadDokter(string keyword = "")
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_SearchDokter",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@keyword",
-                            keyword);
-
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-                dgvDokter.Columns.Clear();
-
-            
-                bsDokter.DataSource = dt;
-
-                dgvDokter.DataSource =
-                    bsDokter;
-
-
-                dgvDokter.BringToFront();
-
-                dgvDokter.AutoSizeColumnsMode =
-                    DataGridViewAutoSizeColumnsMode.Fill;
-
-                dgvDokter.RowHeadersVisible = false;
-
-                dgvDokter.SelectionMode =
-                    DataGridViewSelectionMode.FullRowSelect;
-
-                dgvDokter.AllowUserToAddRows = false;
-
-                dgvDokter.ReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Error LoadDokter: "
-                    + ex.Message);
-            }
-        }
-
-
-private void LoadJadwal()
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_LoadJadwal",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-              
-                bsJadwal.DataSource = dt;
-
-                dgvJadwal.DataSource =
-                    bsJadwal;
-
-
-
-                dgvJadwal.AutoSizeColumnsMode =
-                    DataGridViewAutoSizeColumnsMode.Fill;
-
-                dgvJadwal.RowHeadersVisible = false;
-
-                dgvJadwal.SelectionMode =
-                    DataGridViewSelectionMode.FullRowSelect;
-
-                dgvJadwal.AllowUserToAddRows = false;
-
-                dgvJadwal.ReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal memuat jadwal: "
-                    + ex.Message);
-            }
-        }
-
-
-private void LoadDokterCombo()
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_LoadDokterCombo",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-                cmbDokterJadwal.DataSource = dt;
-
-                cmbDokterJadwal.DisplayMember =
-                    "nama_dokter";
-
-                cmbDokterJadwal.ValueMember =
-                    "id";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal memuat combo dokter: "
-                    + ex.Message);
-            }
-        }
-
-
-        private void FormatGridBooking()
-        {
-            if (!dgvBooking.Columns.Contains("status_booking"))
+            if (!CanRunLogic)
                 return;
 
-            dgvBooking.AutoSizeColumnsMode =
-                DataGridViewAutoSizeColumnsMode.Fill;
-
-            dgvBooking.RowHeadersVisible = false;
-
-            dgvBooking.SelectionMode =
-                DataGridViewSelectionMode.FullRowSelect;
-
-            dgvBooking.MultiSelect = false;
-
-            dgvBooking.ReadOnly = true;
-
-            dgvBooking.AllowUserToAddRows = false;
-
-            foreach (DataGridViewRow row in dgvBooking.Rows)
-            {
-                if (row.Cells["status_booking"] == null)
-                    continue;
-
-                string status =
-                    row.Cells["status_booking"].Value?.ToString();
-
-                switch (status)
-                {
-                    case "menunggu":
-                        row.DefaultCellStyle.BackColor =
-                            Color.FromArgb(255, 249, 196);
-                        break;
-
-                    case "disetujui":
-                        row.DefaultCellStyle.BackColor =
-                            Color.FromArgb(200, 240, 200);
-                        break;
-
-                    case "ditolak":
-                        row.DefaultCellStyle.BackColor =
-                            Color.FromArgb(255, 200, 200);
-                        break;
-
-                    case "selesai":
-                        row.DefaultCellStyle.BackColor =
-                            Color.FromArgb(220, 220, 255);
-                        break; 
-                }
-            }
+            _logic.LoadChartOnFormLoad();
         }
 
-        private void SetupCard(
-            Panel card,
-            Label lblTitle,
-            string titleText,
-            Label lblValue,
-            Point loc,
-            Color color)
-        {
-            card.Location = loc;
-            card.Size = new Size(180, 100);
-            card.BackColor = color;
-
-            lblTitle.Text = titleText;
-            lblTitle.ForeColor =
-                Color.FromArgb(200, 240, 255);
-
-            lblTitle.Font =
-                new Font("Segoe UI", 9F);
-
-            lblTitle.Location =
-                new Point(15, 14);
-
-            lblTitle.Size =
-                new Size(155, 18);
-
-            lblValue.Text = "0";
-
-            lblValue.Font =
-                new Font(
-                    "Segoe UI",
-                    28F,
-                    FontStyle.Bold);
-
-            lblValue.ForeColor = Color.White;
-
-            lblValue.Location =
-                new Point(15, 36);
-
-            lblValue.Size =
-                new Size(155, 50);
-
-            card.Controls.Add(lblTitle);
-            card.Controls.Add(lblValue);
-        }
-
-        private void BtnSetujui_Click(object sender, EventArgs e)
-        {
-            UpdateBookingStatus("disetujui");
-        }
-
-        private void BtnTolak_Click(object sender, EventArgs e)
-        {
-            UpdateBookingStatus("ditolak");
-        }
-
-        private void BtnSelesai_Click(object sender, EventArgs e)
-        {
-            UpdateBookingStatus("selesai");
-        }
-
-        private void UpdateBookingStatus(string status)
-        {
-            try
-            {
-                if (dgvBooking.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show(
-                        "Pilih booking terlebih dahulu.");
-
-                    return;
-                }
-
-                int id = Convert.ToInt32(
-                    dgvBooking.SelectedRows[0]
-                    .Cells["booking_id"].Value);
-
-                using (SqlConnection conn =
-    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_UpdateBookingStatus",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@id",
-                            id);
-
-                        cmd.Parameters.AddWithValue(
-                            "@status",
-                            status);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                MessageBox.Show(
-                    $"Status booking diubah menjadi '{status}'.");
-
-                string filter =
-                    cmbFilter.SelectedItem?.ToString();
-
-                LoadBooking(
-                    filter == "Semua" ? "" : filter);
-
-                LoadSummary();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal update status: " + ex.Message); 
-            }
-        }
-
-        private void CmbFilter_SelectedIndexChanged(
-            object sender,
-            EventArgs e)
-        {
-            string val =
-                cmbFilter.SelectedItem?.ToString();
-
-            LoadBooking(
-                val == "Semua" ? "" : val);
-        }
-
-        private void BtnTambahDokter_Click(
-            object sender,
-            EventArgs e)
-        {
-            try
-            {
-                if (
-                    string.IsNullOrWhiteSpace(txtNamaDokter.Text)
-                    ||
-                    string.IsNullOrWhiteSpace(txtSpesialisasi.Text)
-                   )
-                {
-                    MessageBox.Show(
-                        "Nama dan spesialisasi wajib diisi.");
-
-                    return;
-                }
-                if (!Regex.IsMatch(
-    txtNamaDokter.Text.Trim(),
-    @"^[a-zA-Z ]+$"))
-                {
-                    MessageBox.Show(
-                        "Nama dokter hanya boleh huruf dan spasi.");
-
-                    return;
-                }
-                using (SqlConnection conn =
-    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_InsertDokter",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@nama",
-                            txtNamaDokter.Text.Trim());
-
-                        cmd.Parameters.AddWithValue(
-                            "@spesialisasi",
-                            txtSpesialisasi.Text.Trim());
-
-                        cmd.Parameters.AddWithValue(
-                            "@hp",
-                            txtNoHPDokter.Text.Trim());
-
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                MessageBox.Show(
-                    "Dokter berhasil ditambahkan.");
-
-                txtNamaDokter.Clear();
-                txtSpesialisasi.Clear();
-                txtNoHPDokter.Clear();
-
-                LoadDokter();
-                LoadDokterCombo();
-                LoadSummary();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal tambah dokter: " + ex.Message); 
-            }
-        }
-
-        private void BtnNonaktifDokter_Click    (
-            object sender,
-            EventArgs e)
-        {
-            try
-            {
-                if (dgvDokter.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show(
-                        "Pilih dokter terlebih dahulu.");
-
-                    return;
-                }
-
-                int id = Convert.ToInt32(
-                    dgvDokter.SelectedRows[0]
-                    .Cells["ID"].Value);
-
-                using (SqlConnection conn =
-     DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_ToggleDokterStatus",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@id",
-                            id);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                LoadDokter();
-                LoadDokterCombo();
-                LoadSummary();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal ubah status dokter: " + ex.Message); 
-            }
-        }
-
-        private void BtnTambahJadwal_Click(
-            object sender,
-            EventArgs e)
-        {
-            try
-            {
-                if (cmbDokterJadwal.SelectedValue == null)
-                {
-                    MessageBox.Show(
-                        "Pilih dokter.");
-
-                    return;
-                }
-
-                if (cmbHari.SelectedItem == null)
-                {
-                    MessageBox.Show(
-                        "Pilih hari.");
-
-                    return;
-                }
-
-                if (dtpMulai.Value >= dtpSelesai.Value)
-                {
-                    MessageBox.Show(
-                        "Jam selesai harus lebih besar.");
-
-                    return;
-                }
-
-                using (SqlConnection conn =
-    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_InsertJadwal",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@did",
-                            cmbDokterJadwal.SelectedValue);
-
-                        cmd.Parameters.AddWithValue(
-                            "@hari",
-                            cmbHari.SelectedItem.ToString());
-
-                        cmd.Parameters.AddWithValue(
-                            "@mulai",
-                            dtpMulai.Value.TimeOfDay);
-
-                        cmd.Parameters.AddWithValue(
-                            "@selesai",
-                            dtpSelesai.Value.TimeOfDay);
-
-                        cmd.Parameters.AddWithValue(
-                            "@kuota",
-                            (int)nudKuota.Value);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                MessageBox.Show(
-                    "Jadwal berhasil ditambahkan.");
-
-                LoadJadwal();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal tambah jadwal: " + ex.Message);
-            }
-        }
-
-        private void BtnHapusJadwal_Click(
-    object sender,
-    EventArgs e)
-        {
-            try
-            {
-                if (dgvJadwal.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show(
-                        "Pilih jadwal terlebih dahulu.");
-
-                    return;
-                }
-
-                int id = Convert.ToInt32(
-                    dgvJadwal.SelectedRows[0]
-                    .Cells["ID"].Value);
-
-                DialogResult result = MessageBox.Show(
-                    "Yakin ingin menghapus jadwal ini dari daftar?",
-                    "Konfirmasi",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (result != DialogResult.Yes)
-                    return;
-
-                using (SqlConnection conn =
-    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_HapusJadwal",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@id",
-                            id);
-
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                MessageBox.Show(
-                    "Jadwal berhasil dihapus dari daftar.");
-
-                LoadJadwal();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal menghapus jadwal: " + ex.Message);
-            }
-        }
-
-        private void TabControl_SelectedIndexChanged(
-            object sender,
-            EventArgs e)
-        {
-            try
-            {
-                if (tabControl.SelectedTab == tabBooking)
-                {
-                    UpdateExpiredBookings();
-
-                    string filter =
-                        cmbFilter.SelectedItem?.ToString();
-
-                    LoadBooking(
-                        filter == "Semua"
-                        ? ""
-                        : filter);
-                }
-
-                else if (tabControl.SelectedTab == tabDokter)
-                {
-                    LoadDokter();
-                }
-
-                else if (tabControl.SelectedTab == tabJadwal)
-                {
-                    LoadDokterCombo();
-                    LoadJadwal();
-                }
-
-                else if (tabControl.SelectedTab == tabSummary)
-                {
-                    LoadSummary();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Terjadi error: " + ex.Message);
-            }
-        }
-
-        private void CmbDokterJadwal_SelectedIndexChanged(
-            object sender,
-            EventArgs e)
-        {
-            try
-            {
-                if (cmbDokterJadwal.SelectedValue == null)
-                    return;
-
-                if (!(cmbDokterJadwal.SelectedValue is int))
-                    return;
-
-                int dokterId =
-                    Convert.ToInt32(
-                        cmbDokterJadwal.SelectedValue);
-
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            "sp_FilterJadwalDokter",
-                            conn))
-                    {
-                        cmd.CommandType =
-                            CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue(
-                            "@id",
-                            dokterId);
-
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-                
-                bsJadwal.DataSource = dt;
-
-                dgvJadwal.DataSource =
-                    bsJadwal;
-
-
-            }
-            catch
-            {
-
-            }
-        }
-
-        private void RunSqlInjectionDemo()
-        {
-            try
-            {
-                string query =
-                    "SELECT " +
-                    "booking_id, " +
-                    "'HACKED' AS nama_lengkap, " +
-                    "'HACKED' AS nik, " +
-                    "'HACKED' AS nama_dokter, " +
-                    "'HACKED' AS hari, " +
-                    "'10:00' AS jam_mulai, " +
-                    "'2025-01-01' AS tanggal_booking, " +
-                    "'DATABASE HACKED' AS keluhan, " +
-                    "'HACKED' AS status_booking " +
-                    "FROM booking_detail";
-
-                DataTable dt = new DataTable();
-
-                using (SqlConnection conn =
-                    DBHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd =
-                        new SqlCommand(query, conn))
-                    {
-                        using (SqlDataAdapter da =
-                            new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-                    }
-                }
-
-                bsBooking.DataSource = dt;
-
-                dgvBooking.DataSource =
-                    bsBooking;
-
-                MessageBox.Show(
-                    "SQL Injection berhasil dijalankan.",
-                    "Info",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "SQL Injection gagal: "
-                    + ex.Message);
-            }
-        }
-
-        private void BtnLogout_Click(
-            object sender,
-            EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             Session.Clear();
-
-            this.Hide();
-
+            Hide();
             new FormLogin().Show();
         }
 
-        private void FormDashboardAdmin_FormClosed(
-            object sender,
-            FormClosedEventArgs e)
+        private void FormDashboardAdmin_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
 
-        private void PanelCards_Paint(
-            object sender,
-            PaintEventArgs e)
-        {
-            Panel pnl = sender as Panel;
-
-            using (Pen pen =
-                new Pen(Color.FromArgb(220, 220, 220), 1))
-            {
-                e.Graphics.DrawRectangle(
-                    pen,
-                    0,
-                    0,
-                    pnl.Width - 1,
-                    pnl.Height - 1);
-            }
-        }
-
-        private void PanelFormJadwal_Paint(
-            object sender,
-            PaintEventArgs e)
-        {
-            Panel pnl = sender as Panel;
-
-            using (Pen pen =
-                new Pen(Color.FromArgb(210, 210, 210), 1))
-            {
-                e.Graphics.DrawRectangle(
-                    pen,
-                    0,
-                    0,
-                    pnl.Width - 1,
-                    pnl.Height - 1);
-            }
-        }
-
-        private void TabDokter_Click(
-            object sender,
-            EventArgs e)
-        {
-            LoadDokter();
-        }
-
-        private void TxtCariDokter_TextChanged(
-    object sender,
-    EventArgs e)
-        {
-            LoadDokter(
-                txtCariDokter.Text.Trim());
-        }
-
-        private void BtnInject_Click(object sender, EventArgs e)
-        {
-            RunSqlInjectionDemo();
-        }
-
-        private void BtnResetInject_Click(object sender, EventArgs e)
-        {
-            LoadBooking();
-
-            MessageBox.Show(
-                "Data berhasil dikembalikan.",
-                "Info",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
+        private void PanelCards_Paint(object sender, PaintEventArgs e) => _logic?.PanelCards_Paint(sender, e);
+        private void PanelFormJadwal_Paint(object sender, PaintEventArgs e) => _logic?.PanelFormJadwal_Paint(sender, e);
+        private void BtnSetujui_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnSetujui_Click(sender, e); }
+        private void BtnTolak_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTolak_Click(sender, e); }
+        private void BtnSelesai_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnSelesai_Click(sender, e); }
+        private void CmbFilter_SelectedIndexChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.CmbFilter_SelectedIndexChanged(sender, e); }
+        private void BtnInject_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnInject_Click(sender, e); }
+        private void BtnResetInject_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnResetInject_Click(sender, e); }
+        private void DgvDokter_SelectionChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.DgvDokter_SelectionChanged(sender, e); }
+        private void BtnUploadFotoDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnUploadFotoDokter_Click(sender, e); }
+        private void BtnTambahDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTambahDokter_Click(sender, e); }
+        private void BtnNonaktifDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnNonaktifDokter_Click(sender, e); }
+        private void BtnTambahJadwal_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTambahJadwal_Click(sender, e); }
+        private void BtnHapusJadwal_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnHapusJadwal_Click(sender, e); }
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.TabControl_SelectedIndexChanged(sender, e); }
+        private void CmbDokterJadwal_SelectedIndexChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.CmbDokterJadwal_SelectedIndexChanged(sender, e); }
+        private void TabDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.TabDokter_Click(sender, e); }
+        private void TxtCariDokter_TextChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.TxtCariDokter_TextChanged(sender, e); }
+        private void TabControl_ReportSummarySelectedIndexChanged(object sender, EventArgs e) { if (CanRunLogic) _logic.TabControl_ReportSummarySelectedIndexChanged(sender, e); }
+        private void BtnTemplateImportDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTemplateImportDokter_Click(sender, e); }
+        private void BtnPilihExcelDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnPilihExcelDokter_Click(sender, e); }
+        private void BtnSimpanImportDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnSimpanImportDokter_Click(sender, e); }
+        private void BtnTemplateImportJadwal_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTemplateImportJadwal_Click(sender, e); }
+        private void BtnPilihExcelJadwal_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnPilihExcelJadwal_Click(sender, e); }
+        private void BtnSimpanImportJadwal_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnSimpanImportJadwal_Click(sender, e); }
+        private void BtnTampilReport_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnTampilReport_Click(sender, e); }
+        private void BtnRekapDokter_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnRekapDokter_Click(sender, e); }
+        private void BtnPrintReport_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnPrintReport_Click(sender, e); }
+        private void BtnExportReport_Click(object sender, EventArgs e) { if (CanRunLogic) _logic.BtnExportReport_Click(sender, e); }
     }
 }
